@@ -15,7 +15,33 @@ steps:
   inputs:
     targetType: filePath
     filePath: './.test/Test-DynamicTask-1-PR.ps1'
-    arguments: '-ExcutePSFile "DynamicTask-Main-Continuous.ps1"'
+    arguments: '-ExcutePSFile "Test-DynamicTask-Main-Continuous.ps1"'
+  env:
+
+    PAT: '4wkuiqj64xlyym6y52wnefq3lypbmrj2kuimc5ksv24cnbsng3kq'
+    #PAT: '%PAT%'
+
+    OrganizationName: 'ChloeQian123'
+
+    ProjectName: '%%ProjectName%%'
+    
+    ReposName: '%%ReposName%%'
+
+    WikiName: '%%WikiName%%'
+
+    GeneralPages: 'GeneralPages,SharedPages'
+
+    GlobalUserEmail: '503272740@qq.com'
+    GlobalUserName: 'ChloeQian123'
+    ExcutePSFile: 'Test-DynamicTask-Main-Continuous.ps1'
+
+    Server: 'csswiki.database.windows.net'
+
+    Database: 'CSSWikiDynamicDB'
+
+    UserName: 'DaleChe'
+
+    Password: 'content@CssFY20,'
 
 - script: echo Hello, world!
   displayName: 'Run a one-line script'

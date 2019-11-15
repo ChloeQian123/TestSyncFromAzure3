@@ -1,3 +1,18 @@
+param()
+
+#read
+
+
+#Split
+
+
+#Write
+
+
+#push
+
+
+
 param($PAT, $OrganizationName, $ProjectName,$ReposName,$GlobalUserEmail, $GlobalUserName, $ExcutePSFile)
 
 if(-not $ExcutePSFile)
@@ -6,9 +21,9 @@ if(-not $ExcutePSFile)
     exit 1;
 }
 
-$ScriptFolder =".psscriptsonline\";
+$ScriptFolder =".split\";
 
-. ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + "Common.ps1");
+#. ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + "Common.ps1");
 . ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + $ExcutePSFile);
 #Build at local: & ((Split-Path $MyInvocation.InvocationName) + "\Common.ps1");
 #$ExcutePSFile = "DynamicTask-Main-Daily.ps1",  "DynamicTask-Main-EveryChange.ps1"
