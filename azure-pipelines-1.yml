@@ -7,13 +7,13 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
-
+  vmImage: 'VS2017-Win2016'
 
 
 steps:
 - task: PowerShell@2
   inputs:
+    targetType: filePath
     filePath: './.test/Test-DynamicTask-1-PR.ps1'
     arguments: '-ExcutePSFile "DynamicTask-Main-Continuous.ps1"'
 
