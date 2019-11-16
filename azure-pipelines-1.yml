@@ -18,14 +18,14 @@ steps:
     arguments: '-ExcutePSFile "Test-DynamicTask-Main-Continuous.ps1"'
   env:
 
-    #PAT: '4wkuiqj64xlyym6y52wnefq3lypbmrj2kuimc5ksv24cnbsng3kq'
-    PAT: 'u5e6niy2lvpbm46oxw5ukozcjcmjn2byjjppayy44j7z6sh35bga'
+    #PAT: '4wkuiqj64xlyym6y52wnefq3lypbmrj2kuimc5ksv24cnbsng3kq'  
+    PAT: '45ge3yt7vsyrehf2psc7sitlwvji2v2ipn3h2txzxhcmdb4rnfeq'
 
     OrganizationName: 'ChloeQian123'
 
     ProjectName: 'ChloeQian123.github.io'
     
-    ReposName: 'master'
+    ReposName: 'testuser'
 
     WikiName: '%%WikiName%%'
 
