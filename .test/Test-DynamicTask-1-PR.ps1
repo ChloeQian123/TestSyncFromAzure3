@@ -6,7 +6,7 @@ if(-not $ExcutePSFile)
     exit 1;
 }
 
-$ScriptFolder =".split\";
+$ScriptFolder =".test\";
 
 #. ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + "Common.ps1");
 . ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + $ExcutePSFile);
