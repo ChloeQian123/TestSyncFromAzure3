@@ -120,7 +120,7 @@ git config --global user.email $GlobalUserEmail
 git config --global user.name $GlobalUserName
 
 #Run the script tasks
-RunDynamicPSTasks $ScriptFolder;
+#RunDynamicPSTasks $ScriptFolder;
 
 Write-Host "pat number is " $PAT;
 Write-Host "env pat number is " $env:PAT;
