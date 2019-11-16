@@ -39,25 +39,8 @@ $PAT = $env:PAT;
 $OrganizationName = $env:OrganizationName;
 $ProjectName = $env:ProjectName;
 $ReposName = $env:ReposName;
-
-
-if (IsNull $env:GlobalUserEmail)
-{
-    $GlobalUserEmail = "CSSWikiMigrationTeam@microsoft.com";
-}
-else
-{
-    $GlobalUserEmail = $env:GlobalUserEmail;
-}
-
-if (IsNull $env:GlobalUserName)
-{
-    $GlobalUserName = "ContentAuto"
-}
-else
-{
-    $GlobalUserName = $env:GlobalUserName;
-}
+$GlobalUserEmail = $env:GlobalUserEmail;
+$GlobalUserName = $env:GlobalUserName;
 
 Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName)
 {
