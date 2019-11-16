@@ -19,13 +19,13 @@ steps:
   env:
 
     #PAT: '4wkuiqj64xlyym6y52wnefq3lypbmrj2kuimc5ksv24cnbsng3kq'
-    PAT: '%PAT%'
+    PAT: 'u5e6niy2lvpbm46oxw5ukozcjcmjn2byjjppayy44j7z6sh35bga'
 
     OrganizationName: 'ChloeQian123'
 
-    ProjectName: '%%ProjectName%%'
+    ProjectName: 'ChloeQian123.github.io'
     
-    ReposName: '%%ReposName%%'
+    ReposName: 'master'
 
     WikiName: '%%WikiName%%'
 
