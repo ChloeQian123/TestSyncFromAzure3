@@ -18,8 +18,8 @@ steps:
     arguments: '-ExcutePSFile "Test-DynamicTask-Main-Continuous.ps1"'
   env:
 
-    PAT: '4wkuiqj64xlyym6y52wnefq3lypbmrj2kuimc5ksv24cnbsng3kq'
-    #PAT: '%PAT%'
+    #PAT: '4wkuiqj64xlyym6y52wnefq3lypbmrj2kuimc5ksv24cnbsng3kq'
+    PAT: '%PAT%'
 
     OrganizationName: 'ChloeQian123'
 

@@ -1,18 +1,3 @@
-param()
-
-#read
-
-
-#Split
-
-
-#Write
-
-
-#push
-
-
-
 param($PAT, $OrganizationName, $ProjectName,$ReposName,$GlobalUserEmail, $GlobalUserName, $ExcutePSFile)
 
 if(-not $ExcutePSFile)
