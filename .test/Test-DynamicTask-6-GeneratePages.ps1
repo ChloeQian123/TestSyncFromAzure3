@@ -2,20 +2,20 @@
 
 #. "$PSScriptRoot\Common.ps1"
 
-if (IsNull($Server)) {$Server = $env:Server;}
-if (IsNull($Database))  {$Database = $env:Database;}
-if (IsNull($UserName))  {$UserName = $env:UserName;}
-if (IsNull($Password))  {$Password = $env:Password;}
+#if (IsNull($Server)) {$Server = $env:Server;}
+#if (IsNull($Database))  {$Database = $env:Database;}
+#if (IsNull($UserName))  {$UserName = $env:UserName;}
+#if (IsNull($Password))  {$Password = $env:Password;}
 
-write-host $Server
-write-host $Database
-write-host $UserName
+#write-host $Server
+#write-host $Database
+#write-host $UserName
 
 $CurrentyDir = Split-Path -Parent $MyInvocation.MyCommand.Definition;
 $CWDir= Split-Path -Parent $CurrentyDir;
 
-$SqlConn = New-Object System.Data.SqlClient.SqlConnection
-$SqlConn.ConnectionString = "Data Source=$Server;Initial Catalog=$Database;user id=$UserName;pwd=$Password;"
+#$SqlConn = New-Object System.Data.SqlClient.SqlConnection
+#$SqlConn.ConnectionString = "Data Source=$Server;Initial Catalog=$Database;user id=$UserName;pwd=$Password;"
 
 Write-Host "CWDir"： $CWDir;
 #init param in local
