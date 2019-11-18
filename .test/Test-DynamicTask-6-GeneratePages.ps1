@@ -1,6 +1,6 @@
 ﻿param($Server, $Database, $UserName, $Password)  # call like this . .\DynamicTask-6-GeneratePages.ps1 'csswiki.database.windows.net' 'CSSWikiDynamicDB' 'UserName' 'Password'
 
-. "$PSScriptRoot\Common.ps1"
+#. "$PSScriptRoot\Common.ps1"
 
 if (IsNull($Server)) {$Server = $env:Server;}
 if (IsNull($Database))  {$Database = $env:Database;}
