@@ -31,7 +31,7 @@ steps:
 
     GeneralPages: 'GeneralPages,SharedPages'
 
-    GlobalUserEmail: 'v-jichlo@microsoft.com
+    GlobalUserEmail: 'v-jichlo@microsoft.com'
     GlobalUserName: 'Chloe Chloe'
     ExcutePSFile: 'Test-DynamicTask-Main-Continuous.ps1'
 
