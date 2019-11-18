@@ -86,10 +86,24 @@ return "";
 }
 
 Function Main() {
-    $CWQLDir=$CurrentyDir+"\CWQL";
-    GeneratePages($CWQLDir);
+    $splitDir=$CurrentyDir+"\.split\";
+    SplitContent($splitDir);
+
 }
 
+#Exclude inner content
+Function SplitContent($SplitDir){
+     $fileList = Get-ChildItem -Path $SplitDir;
+	 foreach ($file in $fileList) {
+	    $contentBefore= Get-Content $file.FullName ;
+        Write-Host "Before: " $content ;
+		Write-Host "Now add some text.";
+	    $datetime=[DateTime]::Now.ToString("yyyyMMddHHmmss") ;
+		Add-Content -Path $SplitDir $file.FullName -Value "This is a test section! "$datetime ;
+		$contentAfter= Get-Content $file.FullName ;
+		Write-Host "After: " $contentAfter ;
+	  }
+}
 
  Function GetWikiName($fullName){
     $pos=$fullName.LastIndexOf("CWQL\");
