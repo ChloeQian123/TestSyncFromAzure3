@@ -17,7 +17,8 @@ $CWDir= Split-Path -Parent $CurrentyDir;
 #$SqlConn = New-Object System.Data.SqlClient.SqlConnection
 #$SqlConn.ConnectionString = "Data Source=$Server;Initial Catalog=$Database;user id=$UserName;pwd=$Password;"
 
-Write-Host "CWDir"： $CWDir;
+Write-Host "ProjectDir"： $CWDir;
+Write-Host "ObjectDir"： $CurrentyDir;
 #init param in local
 <#
 $env:WikiName="AzureVMPod";
@@ -99,7 +100,7 @@ Function SplitContent($SplitDir){
         Write-Host "Before: " $content ;
 		Write-Host "Now add some text.";
 	    $datetime=[DateTime]::Now.ToString("yyyyMMddHHmmss") ;
-		Add-Content -Path $SplitDir $file.FullName -Value "This is a test section! "$datetime ;
+		Add-Content $file.FullName -Value "This is a test section! 11180004" ;
 		$contentAfter= Get-Content $file.FullName ;
 		Write-Host "After: " $contentAfter ;
 	  }
