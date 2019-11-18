@@ -94,13 +94,22 @@ Function Main() {
 
 #Exclude inner content
 Function SplitContent($SplitDir){
-     $fileList = Get-ChildItem -Path $SplitDir;
+     $fileList = Get-ChildItem -Path $SplitDir -Filter *.md;
 	 foreach ($file in $fileList) {
 	    $contentBefore= Get-Content $file.FullName ;
         Write-Host "Before: " $contentBefore ;
-		Write-Host "Now add some text.";
-	    $datetime=[DateTime]::Now.ToString("yyyyMMddHHmmss") ;
-		Add-Content $file.FullName -Value "This is a test section! 11180007" ;
+		Write-Host "Start Parsing ...";
+
+
+	    #$datetime=[DateTime]::Now.ToString("yyyyMMddHHmmss") ;
+        $contentTest1= $contentBefore | ForEach-Object {$_.Split("\n")};
+		Write-Host "contentTest1: " $contentTest1;
+		$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." }；
+		$contentTest2= Get-Content $file.FullName ;
+		Write-Host "contentTest2: " $contentTest2;
+
+
+		Add-Content $file.FullName -Value "This is a test section! 11180009" ;
 		$contentAfter= Get-Content $file.FullName ;
 		Write-Host "After: " $contentAfter ;
 	  }
