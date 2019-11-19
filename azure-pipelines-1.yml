@@ -19,7 +19,7 @@ steps:
   env:
 
     #PAT: '4wkuiqj64xlyym6y52wnefq3lypbmrj2kuimc5ksv24cnbsng3kq'  
-    PAT: 'lo57v5gjdy3k5rt3iusvvjjlhflz2cxz2yey4xkps6efslsdnvea'
+    PAT: 'a3uo3y45afx56ut5ppcalw7pji7bt4jw2bvw5ffxupw2vnsytgqq'
 
     OrganizationName: 'ChloeQian123'
 

@@ -100,11 +100,15 @@ Function SplitContent($SplitDir){
         Write-Host "Before: " $contentBefore ;
 		Write-Host "Start Parsing ...";
 
+        #$contentTest1= $contentBefore | ForEach-Object {$_.Split("\n")};
+		#$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." };
+		
+		$contentBefore | ForEach-Object { 
+		if($_..StartWith(":::"))
+		    $contentBefore.Replace($_.,"[This line is difined as inner content]");
+		};
 
-	    #$datetime=[DateTime]::Now.ToString("yyyyMMddHHmmss") ;
-        $contentTest1= $contentBefore | ForEach-Object {$_.Split("\n")};
-		Write-Host "contentTest1: " $contentTest1;
-		$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." };
+
 		$contentTest2= Get-Content $file.FullName ;
 		Write-Host "contentTest2: " $contentTest2;
 
