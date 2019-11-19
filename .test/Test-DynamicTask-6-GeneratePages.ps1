@@ -104,7 +104,7 @@ Function SplitContent($SplitDir){
 		#$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." };
 		
 		$contentBefore | ForEach-Object { 
-		if($_.Contains(":::")){$contentBefore.Replace($_,"[This line is difined as inner content]");}
+		#if($_.Contains(":::")){$contentBefore.Replace($_,"[This line is difined as inner content]");}
 		    
 		};
 
@@ -113,7 +113,7 @@ Function SplitContent($SplitDir){
 		Write-Host "contentTest2: " $contentTest2;
 
 
-		Add-Content $file.FullName -Value "This is a test section! 11180009" ;
+		#Add-Content $file.FullName -Value "This is a test section! 11180009" ;
 		$contentAfter= Get-Content $file.FullName ;
 		Write-Host "After: " $contentAfter ;
 	  }
