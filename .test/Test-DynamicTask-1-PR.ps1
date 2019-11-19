@@ -63,8 +63,7 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		$CommitTitleText = "Automatic Dynamic Content Update"
 
 		$DevOPSDomain = "dev.azure.com"
-		#$RemoteURL = "https://${OrganizationName}:$PAT@$DevOPSDomain/$OrganizationName/$ProjectName/_git/$ReposName"
-		$RemoteURL = "https://${OrganizationName}:$PAT@$DevOPSDomain/$OrganizationName/$ProjectName/_git/"
+		$RemoteURL = "https://${OrganizationName}:$PAT@$DevOPSDomain/$OrganizationName/$ProjectName/_git/$ReposName"
 		$PRResponseURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName/pullrequests?api-version=5.0"
     
 		# Commit our changes to a new branch, and push
