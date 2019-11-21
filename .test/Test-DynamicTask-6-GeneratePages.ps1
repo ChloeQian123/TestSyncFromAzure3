@@ -104,6 +104,8 @@ Function SplitContent($SplitDir){
 		#$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." };
 		
 		$contentBefore | ForEach-Object { 
+
+
 		#if($_.Contains(":::")){$contentBefore.Replace($_,"[This line is difined as inner content]");}		    
 		};
 
