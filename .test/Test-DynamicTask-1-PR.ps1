@@ -59,7 +59,8 @@ Write-Host "ReposName is " $ReposName;
 Function PushtoGithub($GithubRepoUrl)
 {
     $GithubTempRepo="GithubTempRepo";
-	$newfilename="Readme112101.md";
+	$newfilename="Readme112104.md";
+	$updatefilename="Readme222.md"
 
     Write-Host "Github operations start:";
 
@@ -72,11 +73,14 @@ Function PushtoGithub($GithubRepoUrl)
 
 	cd $GithubTempRepo 
 
-
-	Write-Host "Modify a file";
-	echo > $newfilename
-	git add $newfilename
-
+	Write-Host "modify a file";
+	$filelist = Get-ChildItem -Filter *.md;
+	ForEach($file in $filelist){
+	Add-Content $file.FullName -Value "This is a test section! 1121-5" ;
+	Write-Host "Add to commit";
+	git add $file.FullName
+	}
+	
 	Write-Host "Git status after modification";
 	git status
 
