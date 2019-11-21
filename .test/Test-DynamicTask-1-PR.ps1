@@ -58,6 +58,9 @@ Write-Host "ReposName is " $ReposName;
 
 Function PushtoGithub($GithubRepoUrl)
 {
+    $GithubTempRepo="GithubTempRepo";
+	$newfilename="Readme112101.md";
+
     Write-Host "Github operations start:";
 
 	Write-Host "Config account info";
@@ -65,20 +68,20 @@ Function PushtoGithub($GithubRepoUrl)
     git config --global user.email "v-jichlo@microsoft.com"
 
     Write-Host "Clone Github Repo to local ../GithubTempRepo";
-    git clone https://github.com/ChloeQian123/ChloeQian123.github.io.git GithubTempRepo 
+    git clone https://github.com/ChloeQian123/ChloeQian123.github.io.git $GithubTempRepo 
 
-	cd GithubTempRepo 
-	echo >Readme112101.md
+	cd $GithubTempRepo 
+
 
 	Write-Host "Modify a file";
-	echo >Readme112101.md
-	git add Readme112101.md
+	echo > $newfilename
+	git add $newfilename
 
 	Write-Host "Git status after modification";
 	git status
 
 	Write-Host "Commit to local Repo";
-	git commit -m "test commit 1121-3 "
+	git commit -m "test commit 1121-4 "
 
 	Write-Host "Push to remote Repo";
 	git push origion master
