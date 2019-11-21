@@ -42,6 +42,58 @@ $ReposName = $env:ReposName;
 $GlobalUserEmail = $env:GlobalUserEmail;
 $GlobalUserName = $env:GlobalUserName;
 
+
+git config --global user.email $GlobalUserEmail
+git config --global user.name $GlobalUserName
+
+#Run the script tasks
+RunDynamicPSTasks $ScriptFolder;
+
+Write-Host "pat number is " $PAT;
+Write-Host "env pat number is " $env:PAT;
+Write-Host "OrganizationName is " $OrganizationName;
+Write-Host "ProjectName is " $ProjectName;
+Write-Host "ReposName is " $ReposName;
+
+#Run Git commit and push operations
+PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName;
+$GithubRepoUrl="https://github.com/ChloeQian123/ChloeQian123.github.io.git";
+PushtoGithub $GithubRepoUrl;
+
+Function PushtoGithub($GithubRepoUrl)
+{
+    Write-Host "Github operations start:";
+
+	Write-Host "Config account info";
+	git config --global user.name "Chloe Chloe"
+    git config --global user.email "v-jichlo@microsoft.com"
+
+    Write-Host "Clone Github Repo to local ../GithubTempRepo";
+    git clone https://github.com/ChloeQian123/ChloeQian123.github.io.git GithubTempRepo 
+
+	cd GithubTempRepo 
+	echo >Readme112101.md
+
+	Write-Host "Modify a file";
+	echo >Readme112101.md
+	git add Readme112101.md
+
+	Write-Host "Git status after modification";
+	git status
+
+	Write-Host "Commit to local Repo";
+	git commit -m "test commit 1121-1 "
+
+	Write-Host "Push to remote Repo";
+	git push origion master
+
+	Write-Host "Delete local Repo ../GithubTempRepo";
+
+	Write-Host "Github operations complete";
+
+}
+
+
 Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName)
 {
 	if ((git status) -match "working tree clean") {
@@ -115,18 +167,3 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 			-Body "{ status: `"completed`", lastMergeSourceCommit: { commitId: `"$commitId`" }, completionOptions: { bypassPolicy: `"true`", bypassReason: `"$CommitTitleText`"  } }"
 	}
 }
-
-git config --global user.email $GlobalUserEmail
-git config --global user.name $GlobalUserName
-
-#Run the script tasks
-RunDynamicPSTasks $ScriptFolder;
-
-Write-Host "pat number is " $PAT;
-Write-Host "env pat number is " $env:PAT;
-Write-Host "OrganizationName is " $OrganizationName;
-Write-Host "ProjectName is " $ProjectName;
-Write-Host "ReposName is " $ReposName;
-
-#Run Git commit and push operations
-PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName;
