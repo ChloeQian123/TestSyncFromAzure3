@@ -55,9 +55,6 @@ Write-Host "OrganizationName is " $OrganizationName;
 Write-Host "ProjectName is " $ProjectName;
 Write-Host "ReposName is " $ReposName;
 
-#Run Git commit and push operations
-PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName;
-
 
 Function PushtoGithub($GithubRepoUrl)
 {
@@ -81,7 +78,7 @@ Function PushtoGithub($GithubRepoUrl)
 	git status
 
 	Write-Host "Commit to local Repo";
-	git commit -m "test commit 1121-2 "
+	git commit -m "test commit 1121-3 "
 
 	Write-Host "Push to remote Repo";
 	git push origion master
@@ -91,7 +88,6 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "Github operations complete";
 
 }
-
 
 Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName)
 {
@@ -164,12 +160,11 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 			-ContentType "application/json" `
 			-Headers @{"Authorization" = "Basic $encodedPAT"} `
 			-Body "{ status: `"completed`", lastMergeSourceCommit: { commitId: `"$commitId`" }, completionOptions: { bypassPolicy: `"true`", bypassReason: `"$CommitTitleText`"  } }"
-
-	    $GithubRepoUrl="https://github.com/ChloeQian123/ChloeQian123.github.io.git";
-        PushtoGithub $GithubRepoUrl;
-	
-	
-	
 	
 	}
 }
+
+#Run Git commit and push operations
+PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName;
+$GithubRepoUrl="https://github.com/ChloeQian123/ChloeQian123.github.io.git";
+PushtoGithub $GithubRepoUrl;
