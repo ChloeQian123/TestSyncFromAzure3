@@ -76,7 +76,7 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "modify a file";
 	$filelist = Get-ChildItem -Filter *.md;
 	ForEach($file in $filelist){
-	Add-Content $file.FullName -Value "This is a test section! 1121-5" ;
+	Add-Content $file.FullName -Value "This is a test section! 1121-6" ;
 	Write-Host "Add to commit";
 	git add $file.FullName
 	}
@@ -85,10 +85,14 @@ Function PushtoGithub($GithubRepoUrl)
 	git status
 
 	Write-Host "Commit to local Repo";
-	git commit -m "test commit 1121-4 "
+	git commit -m "test commit 1121-6 "
+
+	Write-Host "Set remote Repo";
+	git remote set-url --push origin git@github.com:vtbassmatt/vtbassmatt.github.io.git
 
 	Write-Host "Push to remote Repo";
-	git push origion master
+    git push origin HEAD:master
+	#git push origion master
 
 	Write-Host "Delete local Repo ../GithubTempRepo";
 
