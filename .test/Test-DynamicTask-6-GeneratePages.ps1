@@ -113,7 +113,7 @@ Function SplitContent($SplitDir){
 		$contentTest2= Get-Content $file.FullName ;
 		Write-Host "contentTest2: " $contentTest2;
 
-		Add-Content $file.FullName -Value "This is a test section! 1122-2" ;
+		Add-Content $file.FullName -Value "This is a test section! 1122-3" ;
 		$contentAfter= Get-Content $file.FullName ;
 		Write-Host "After: " $contentAfter ;
 	  }
