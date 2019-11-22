@@ -58,8 +58,10 @@ Write-Host "ReposName is " $ReposName;
 
 Function PushtoGithub($GithubRepoUrl)
 {
-    $sshkey = Get-ChildItem -Path c:\.ssh;
-	Write-Host "sshkeyname:" $sshkey.FullName;
+    $CurrentyDir = Split-Path -Parent $MyInvocation.MyCommand.Definition;
+    #$CWDir= Split-Path -Parent $CurrentyDir;
+
+	Write-Host "CurrentyDir:" $CurrentyDir;
 
     $GithubTempRepo="GithubTempRepo";
 	$newfilename="Readme112104.md";
