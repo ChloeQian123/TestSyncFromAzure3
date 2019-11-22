@@ -55,6 +55,7 @@ steps:
     sudo chown root:root $(caCertificate.secureFilePath)
     sudo chmod a+r $(caCertificate.secureFilePath)
     sudo ln -s -t /etc/ssl/certs/ $(caCertificate.secureFilePath)
+    Copy-Item -Path $(Agent.WorkFolder)\_temp\filename -Destination $(Build.ArtifactStagingDirectory)
 
 - script: echo Hello, world!
   displayName: 'Run a one-line script'

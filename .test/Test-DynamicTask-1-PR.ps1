@@ -91,7 +91,7 @@ Function PushtoGithub($GithubRepoUrl)
     git remote set-url --push origin git@github.com:ChloeQian123/ChloeQian123.github.io.git
 
 	Write-Host "Push to remote Repo";
-    git push origin HEAD:master
+    git push origin master
 	
 	Write-Host "Delete local Repo ../GithubTempRepo";
 
