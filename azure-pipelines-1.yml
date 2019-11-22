@@ -45,17 +45,18 @@ steps:
 
 
 - task: DownloadSecureFile@1
-  name: caCertificate
+  name: deploy_key
   displayName: 'Download deploy_key'
   inputs:
     secureFile: 'deploy_key'
 
 - script: |
-    echo Installing $(caCertificate.secureFilePath) to the trusted CA directory...
-    sudo chown root:root $(caCertificate.secureFilePath)
-    sudo chmod a+r $(caCertificate.secureFilePath)
-    sudo ln -s -t /etc/ssl/certs/ $(caCertificate.secureFilePath)
+    echo Installing $(deploy_key.secureFilePath) to the trusted CA directory...
+    sudo chown root:root $(deploy_key.secureFilePath)
+    sudo chmod a+r $(deploy_key.secureFilePath)
+    sudo ln -s -t /etc/ssl/certs/ $(deploy_key.secureFilePath)
     Copy-Item -Path $(Agent.WorkFolder)\_temp\filename -Destination $(Build.ArtifactStagingDirectory)
+    
 
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
