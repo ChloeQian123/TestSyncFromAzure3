@@ -90,6 +90,9 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "Origin before";
 	git remote show origin
 
+	Write-Host "Set remote Repo";
+    git remote set-url --push origin "https://ChloeQian123:Chloe@2019@github.com:ChloeQian123/ChloeQian123.github.io.git"
+
 	#Write-Host "Set remote Repo";
     #git remote set-url --push origin git@github.com:ChloeQian123/ChloeQian123.github.io.git
 
