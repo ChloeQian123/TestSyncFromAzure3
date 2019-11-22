@@ -65,7 +65,7 @@ Function PushtoGithub($GithubRepoUrl)
     Write-Host "Github operations start:";
 
 	Write-Host "Config account info";
-	git config --global user.name "Chloe Chloe"
+	git config --global user.name "ChloeQian123"
     git config --global user.email "503272740@qq.com"
 
     Write-Host "Clone Github Repo to local ../GithubTempRepo";
@@ -87,8 +87,14 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "Commit to local Repo";
 	git commit -m "test commit 1122-3 "
 
-	Write-Host "Set remote Repo";
-    git remote set-url --push origin git@github.com:ChloeQian123/ChloeQian123.github.io.git
+	Write-Host "Origin before";
+	git remote show origin
+
+	#Write-Host "Set remote Repo";
+    #git remote set-url --push origin git@github.com:ChloeQian123/ChloeQian123.github.io.git
+
+	#Write-Host "Origin after";
+	#git remote show origin
 
 	Write-Host "Push to remote Repo";
     git push origin master
