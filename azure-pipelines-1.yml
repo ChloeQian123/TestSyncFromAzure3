@@ -43,6 +43,19 @@ steps:
 
     Password: 'content@CssFY20,'
 
+
+- task: DownloadSecureFile@1
+  name: caCertificate
+  displayName: 'Download deploy_key'
+  inputs:
+    secureFile: 'deploy_key'
+
+- script: |
+    echo Installing $(caCertificate.secureFilePath) to the trusted CA directory...
+    sudo chown root:root $(caCertificate.secureFilePath)
+    sudo chmod a+r $(caCertificate.secureFilePath)
+    sudo ln -s -t /etc/ssl/certs/ $(caCertificate.secureFilePath)
+
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
