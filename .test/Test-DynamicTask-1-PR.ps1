@@ -58,14 +58,10 @@ Write-Host "ReposName is " $ReposName;
 
 Function PushtoGithub($GithubRepoUrl)
 {
-    $CurrentyDir = Split-Path -Parent $MyInvocation.MyCommand.Definition;
-    #$CWDir= Split-Path -Parent $CurrentyDir;
-
-	Write-Host "CurrentyDir:" $CurrentyDir;
 
     $GithubTempRepo="GithubTempRepo";
 	$newfilename="Readme112104.md";
-	$updatefilename="Readme222.md"
+	$updatefilename="Readme222.md";
 
     Write-Host "Github operations start:";
 
