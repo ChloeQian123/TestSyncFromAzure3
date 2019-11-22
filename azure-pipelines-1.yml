@@ -2,6 +2,13 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+#echo Installing $(deploy_key.secureFilePath) to the trusted CA directory...
+#sudo chown root:root $(deploy_key.secureFilePath)
+#sudo chmod a+r $(deploy_key.secureFilePath)
+#sudo ln -s -t /etc/ssl/certs/ $(deploy_key.secureFilePath)
+#Copy-Item -Path $(Agent.WorkFolder)\_temp\filename -Destination $(Build.ArtifactStagingDirectory)
+    
+
 
 trigger:
 - master
@@ -51,12 +58,8 @@ steps:
     secureFile: 'deploy_key'
 
 - script: |
-    echo Installing $(deploy_key.secureFilePath) to the trusted CA directory...
-    sudo chown root:root $(deploy_key.secureFilePath)
-    sudo chmod a+r $(deploy_key.secureFilePath)
-    sudo ln -s -t /etc/ssl/certs/ $(deploy_key.secureFilePath)
-    Copy-Item -Path $(Agent.WorkFolder)\_temp\filename -Destination $(Build.ArtifactStagingDirectory)
-    
+    Copy-Item  -Path $(deploy_key.secureFilePath) -Destination c:\.ssh\deploy_key
+
 
 - script: echo Hello, world!
   displayName: 'Run a one-line script'

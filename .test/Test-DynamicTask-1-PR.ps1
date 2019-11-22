@@ -58,7 +58,8 @@ Write-Host "ReposName is " $ReposName;
 
 Function PushtoGithub($GithubRepoUrl)
 {
-    Write-Host "sshkey path" $(deploy_key.secureFilePath);
+    $sshkey = Get-ChildItem -Path c:\.ssh;
+	Write-Host "sshkeyname:" $sshkey.FullName;
 
     $GithubTempRepo="GithubTempRepo";
 	$newfilename="Readme112104.md";
