@@ -66,7 +66,7 @@ Function PushtoGithub($GithubRepoUrl)
 
 	Write-Host "Config account info";
 	git config --global user.name "Chloe Chloe"
-    git config --global user.email "v-jichlo@microsoft.com"
+    git config --global user.email "503272740@qq.com"
 
     Write-Host "Clone Github Repo to local ../GithubTempRepo";
     git clone https://github.com/ChloeQian123/ChloeQian123.github.io.git $GithubTempRepo 
