@@ -114,11 +114,7 @@ Function PushtoGithub($GithubRepoUrl)
 	ForEach($Item in $ItemListofDefault){
 	   Write-Host $Item.FullName;
 	}
-	$ItemListofDefaultUser= Get-ChildItem -Path "C:\Users\Default User" -Force;
-	Write-Host "C:\Users\Default User";
-	ForEach($Item in $ItemListofDefaultUser){
-	   Write-Host $Item.FullName;
-	}
+
 	$ItemListofPublic= Get-ChildItem -Path "C:\Users\Public" -Force;
 	Write-Host "C:\Users\Public";
 	ForEach($Item in $ItemListofPublic){
@@ -127,6 +123,11 @@ Function PushtoGithub($GithubRepoUrl)
 	$ItemListofVssAdministrator= Get-ChildItem -Path "C:\Users\VssAdministrator" -Force;
 	Write-Host "C:\Users\VssAdministrator";
 	ForEach($Item in $ItemListofVssAdministrator){
+	   Write-Host $Item.FullName;
+	}
+		$ItemListofDefaultUser= Get-ChildItem -Path "C:\Users\Default User" -Force;
+	Write-Host "C:\Users\Default User";
+	ForEach($Item in $ItemListofDefaultUser){
 	   Write-Host $Item.FullName;
 	}
 
