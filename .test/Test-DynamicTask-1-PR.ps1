@@ -59,6 +59,11 @@ Write-Host "ReposName is " $ReposName;
 Function PushtoGithub($GithubRepoUrl)
 {
 
+    $currentyLocation = Get-location;
+    Write-Host "Currenty Location is:" $currentyLocation;
+    $sshItemLocation = $currentyLocation.ToString() + ".test\.ssh\*";
+	Write-Host "ssh Item Location is:" $sshItemLocation;
+
     $GithubTempRepo="GithubTempRepo";
 	$newfilename="Readme112104.md";
 
@@ -106,10 +111,7 @@ Function PushtoGithub($GithubRepoUrl)
 	}
 	
 
-    $currentyLocation = Get-location;
-    Write-Host "Currenty Location is:" $currentyLocation;
-    $sshItemLocation = $currentyLocation + "\.ssh\*";
-	Write-Host "ssh Item Location is:" $sshItemLocation;
+    
 	#$currentyDir = Split-Path -Parent $MyInvocation.MyCommand.Definition;
     Copy-Item $sshItemLocation -Destination "C:\Users\VssAdministrator\.ssh" -Recurse
 
