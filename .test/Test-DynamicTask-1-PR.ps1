@@ -92,11 +92,11 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "Commit to local Repo";
 	git commit -m "test commit 1122-3 "
 
-	Write-Host "Origin before";
-	git remote show origin
-	 
+	Write-Host "Push to remote Repo using https";
+
 	Write-Host "Set remote Repo";
-    git remote set-url --push origin git@github.com:ChloeQian123/ChloeQian123.github.io.git
+	$GithubRepoPushUrl="https://ChloeQian123:759bba943e7a7a4ec4a27136b9a4d6a6a261b8ce@github.com/ChloeQian123/ChloeQian123.github.io.git";
+    git remote set-url --push origin $GithubRepoPushUrl
 
 	Write-Host "Origin after";
 	git remote show origin
@@ -123,8 +123,8 @@ Function PushtoGithub($GithubRepoUrl)
 	}
 
 
-    Write-Host "Try Again Push to remote Repo";
-    git push origin master
+    #Write-Host "Try Again Push to remote Repo";
+    #git push origin master
 
 	#Write-Host "Delete local Repo ../GithubTempRepo";
 	#Write-Host "Github operations complete";
