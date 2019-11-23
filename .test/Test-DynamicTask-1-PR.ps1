@@ -58,11 +58,6 @@ Write-Host "ReposName is " $ReposName;
 
 Function PushtoGithub($GithubRepoUrl)
 {
-    $ItemListofDiskC= Get-ChildItem -Path "C:\Users" -Force;
-	Write-Host "ItemListofDiskC";
-	ForEach($Item in $ItemListofDiskC){
-	   Write-Host $Item.FullName;
-	}
 
     $GithubTempRepo="GithubTempRepo";
 	$newfilename="Readme112104.md";
@@ -81,10 +76,10 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "modify a file";
 	$filelist = Get-ChildItem -Filter *.md;
 	ForEach($file in $filelist){
-	Add-Content $file.FullName -Value "This is a test section! 1122-3" ;
-	Write-Host "Add to commit";
-	git add $file.FullName
-	}
+	  Add-Content $file.FullName -Value "This is a test section! 1122-3" ;
+	  Write-Host "Add to commit";
+	  git add $file.FullName
+	 }
 	
 	Write-Host "Git status after modification";
 	git status
@@ -104,36 +99,33 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "Push to remote Repo";
     git push origin master
 
-	 $ItemListofAllUsers= Get-ChildItem -Path "C:\Users\All Users" -Force;
-	Write-Host "C:\Users\All Users";
-	ForEach($Item in $ItemListofAllUsers){
+	$ItemListofVssAdministratorssh= Get-ChildItem -Path "C:\Users\VssAdministrator\.ssh" -Force;
+	Write-Host "C:\Users\VssAdministrator\.ssh";
+	ForEach($Item in $ItemListofVssAdministratorssh){
 	   Write-Host $Item.FullName;
 	}
-	$ItemListofDefault= Get-ChildItem -Path "C:\Users\Default" -Force;
-	Write-Host "C:\Users\Default";
-	ForEach($Item in $ItemListofDefault){
+	
+
+    $currentyLocation = Get-location;
+    Write-Host "Currenty Location is:" $currentyLocation;
+    $sshItemLocation = $currentyLocation + "\.ssh\*";
+	Write-Host "ssh Item Location is:" $sshItemLocation;
+	#$currentyDir = Split-Path -Parent $MyInvocation.MyCommand.Definition;
+    Copy-Item $sshItemLocation -Destination "C:\Users\VssAdministrator\.ssh" -Recurse
+
+	Write-Host "Copy ssh item manually to C:\Users\VssAdministrator\.ssh" $currentyLocation;
+	$ItemListofVssAdministratorssh= Get-ChildItem -Path "C:\Users\VssAdministrator\.ssh" -Force;
+	Write-Host "C:\Users\VssAdministrator\.ssh";
+	ForEach($Item in $ItemListofVssAdministratorssh){
 	   Write-Host $Item.FullName;
 	}
 
-	$ItemListofPublic= Get-ChildItem -Path "C:\Users\Public" -Force;
-	Write-Host "C:\Users\Public";
-	ForEach($Item in $ItemListofPublic){
-	   Write-Host $Item.FullName;
-	}
-	$ItemListofVssAdministrator= Get-ChildItem -Path "C:\Users\VssAdministrator" -Force;
-	Write-Host "C:\Users\VssAdministrator";
-	ForEach($Item in $ItemListofVssAdministrator){
-	   Write-Host $Item.FullName;
-	}
-		$ItemListofDefaultUser= Get-ChildItem -Path "C:\Users\Default User" -Force;
-	Write-Host "C:\Users\Default User";
-	ForEach($Item in $ItemListofDefaultUser){
-	   Write-Host $Item.FullName;
-	}
+
+    Write-Host "Try Again Push to remote Repo";
+    git push origin master
 
 	#Write-Host "Delete local Repo ../GithubTempRepo";
 	#Write-Host "Github operations complete";
-
 }
 
 Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName)
