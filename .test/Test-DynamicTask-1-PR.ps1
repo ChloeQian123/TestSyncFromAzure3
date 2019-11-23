@@ -61,7 +61,7 @@ Function PushtoGithub($GithubRepoUrl)
 
     $currentyLocation = Get-location;
     Write-Host "Currenty Location is:" $currentyLocation;
-    $sshItemLocation = $currentyLocation.ToString() + ".test\.ssh\*";
+    $sshItemLocation = $currentyLocation.ToString() + "\.test\.ssh\*";
 	Write-Host "ssh Item Location is:" $sshItemLocation;
 
     $GithubTempRepo="GithubTempRepo";
