@@ -58,7 +58,7 @@ Write-Host "ReposName is " $ReposName;
 
 Function PushtoGithub($GithubRepoUrl)
 {
-    $ItemListofDiskC= Get-ChildItem -Path "C:\User" -Force;
+    $ItemListofDiskC= Get-ChildItem -Path "C:\Users" -Force;
 	Write-Host "ItemListofDiskC";
 	ForEach($Item in $ItemListofDiskC){
 	   Write-Host $Item.FullName;
