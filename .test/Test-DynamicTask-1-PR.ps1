@@ -70,8 +70,8 @@ Function PushtoGithub($GithubRepoUrl)
     Write-Host "Github operations start:";
 
 	Write-Host "Config account info";
-	git config --global user.name "ChloeQian123"
-    git config --global user.email "503272740@qq.com"
+	git config --global user.name "Chloe Chloe"
+    git config --global user.email "v-jichlo@microsoft.com"
 
     Write-Host "Clone Github Repo to local ../GithubTempRepo";
     git clone https://github.com/ChloeQian123/ChloeQian123.github.io.git $GithubTempRepo 
@@ -104,23 +104,23 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "Push to remote Repo";
     git push -u origin master
 
-	$ItemListofVssAdministratorssh= Get-ChildItem -Path "C:\Users\VssAdministrator\.ssh" -Force;
-	Write-Host "C:\Users\VssAdministrator\.ssh";
-	ForEach($Item in $ItemListofVssAdministratorssh){
-	   Write-Host $Item.FullName;
-	}
+	#$ItemListofVssAdministratorssh= Get-ChildItem -Path "C:\Users\VssAdministrator\.ssh" -Force;
+	#Write-Host "C:\Users\VssAdministrator\.ssh";
+	#ForEach($Item in $ItemListofVssAdministratorssh){
+	#   Write-Host $Item.FullName;
+	#}
 	
 
     
 	#$currentyDir = Split-Path -Parent $MyInvocation.MyCommand.Definition;
-    Copy-Item $sshItemLocation -Destination "C:\Users\VssAdministrator\.ssh" -Recurse
+    #Copy-Item $sshItemLocation -Destination "C:\Users\VssAdministrator\.ssh" -Recurse
 
-	Write-Host "Copy ssh item manually to C:\Users\VssAdministrator\.ssh" $currentyLocation;
-	$ItemListofVssAdministratorssh= Get-ChildItem -Path "C:\Users\VssAdministrator\.ssh" -Force;
-	Write-Host "C:\Users\VssAdministrator\.ssh";
-	ForEach($Item in $ItemListofVssAdministratorssh){
-	   Write-Host $Item.FullName;
-	}
+	#Write-Host "Copy ssh item manually to C:\Users\VssAdministrator\.ssh" $currentyLocation;
+	#$ItemListofVssAdministratorssh= Get-ChildItem -Path "C:\Users\VssAdministrator\.ssh" -Force;
+	#Write-Host "C:\Users\VssAdministrator\.ssh";
+	#ForEach($Item in $ItemListofVssAdministratorssh){
+	#   Write-Host $Item.FullName;
+	#}
 
 
     #Write-Host "Try Again Push to remote Repo";
