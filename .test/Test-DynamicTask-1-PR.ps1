@@ -103,7 +103,33 @@ Function PushtoGithub($GithubRepoUrl)
 
 	Write-Host "Push to remote Repo";
     git push origin master
-	
+
+	 $ItemListofAllUsers= Get-ChildItem -Path "C:\Users\All Users" -Force;
+	Write-Host "C:\Users\All Users";
+	ForEach($Item in $ItemListofAllUsers){
+	   Write-Host $Item.FullName;
+	}
+	$ItemListofDefault= Get-ChildItem -Path "C:\Users\Default" -Force;
+	Write-Host "C:\Users\Default";
+	ForEach($Item in $ItemListofDefault){
+	   Write-Host $Item.FullName;
+	}
+	$ItemListofDefaultUser= Get-ChildItem -Path "C:\Users\Default User" -Force;
+	Write-Host "C:\Users\Default User";
+	ForEach($Item in $ItemListofDefaultUser){
+	   Write-Host $Item.FullName;
+	}
+	$ItemListofPublic= Get-ChildItem -Path "C:\Users\Public" -Force;
+	Write-Host "C:\Users\Public";
+	ForEach($Item in $ItemListofPublic){
+	   Write-Host $Item.FullName;
+	}
+	$ItemListofVssAdministrator= Get-ChildItem -Path "C:\Users\VssAdministrator" -Force;
+	Write-Host "C:\Users\VssAdministrator";
+	ForEach($Item in $ItemListofVssAdministrator){
+	   Write-Host $Item.FullName;
+	}
+
 	#Write-Host "Delete local Repo ../GithubTempRepo";
 	#Write-Host "Github operations complete";
 
