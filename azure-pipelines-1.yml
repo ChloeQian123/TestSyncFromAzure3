@@ -58,7 +58,7 @@ steps:
     secureFile: 'deploy_key'
 
 - script: |
-    Copy-Item  -Path $(deploy_key.secureFilePath) -Destination c:\.ssh\deploy_key
+
 
 
 - script: echo Hello, world!

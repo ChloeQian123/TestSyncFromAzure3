@@ -58,10 +58,14 @@ Write-Host "ReposName is " $ReposName;
 
 Function PushtoGithub($GithubRepoUrl)
 {
+    $ItemListofDiskC= Get-ChildItem -Path "C:\" -Force;
+	Write-Host "ItemListofDiskC";
+	ForEach($Item in $ItemListofDiskC){
+	   Write-Host $Item.FullName;
+	}
 
     $GithubTempRepo="GithubTempRepo";
 	$newfilename="Readme112104.md";
-	$updatefilename="Readme222.md";
 
     Write-Host "Github operations start:";
 
