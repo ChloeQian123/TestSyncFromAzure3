@@ -102,7 +102,7 @@ Function PushtoGithub($GithubRepoUrl)
 	git remote show origin
 
 	Write-Host "Push to remote Repo";
-    git push origin master
+    git push -u origin master
 
 	$ItemListofVssAdministratorssh= Get-ChildItem -Path "C:\Users\VssAdministrator\.ssh" -Force;
 	Write-Host "C:\Users\VssAdministrator\.ssh";
