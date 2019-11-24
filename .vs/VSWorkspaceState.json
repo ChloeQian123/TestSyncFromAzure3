@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.test"
+    "\\.test",
+    "\\.test\\.split"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\.test\\.split\\Azure_Features_Azure-Storage.md",
   "PreviewInSolutionExplorer": false
 }

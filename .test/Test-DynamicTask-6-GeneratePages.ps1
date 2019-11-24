@@ -106,7 +106,7 @@ Function SplitContent($SplitDir){
 		$contentBefore | ForEach-Object { 
 
 
-		#if($_.Contains(":::")){$contentBefore.Replace($_,"[This line is difined as inner content]");}		    
+		if($_.SubString(0,3)==":::"){$contentBefore.Replace($_,"");}		    
 		};
 
 
