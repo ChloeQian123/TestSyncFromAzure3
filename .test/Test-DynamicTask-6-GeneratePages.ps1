@@ -107,8 +107,10 @@ Function SplitContent($SplitDir){
 		$fileContent | ForEach-Object { 
 		
 		$rowcontent = $_.tostring();
-		Write-Host "rowcontent Before: " $rowcontent;
+		Write-Host "rowcontent: " $rowcontent;
+		Write-Host "length: " $rowcontent.length;
 		if($rowcontent.length -ge 2){
+		Write-Host "first 3 chars: " $rowcontent.SubString(0,2);		
 		if($rowcontent.SubString(0,2) -eq ":::")
 		{ 
 		Write-Host "This row start with ':::', which is defined as private content." $rowcontent;
