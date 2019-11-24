@@ -96,28 +96,28 @@ Function Main() {
 Function SplitContent($SplitDir){
      $fileList = Get-ChildItem -Path $SplitDir -Filter *.md;
 	 foreach ($file in $fileList) {
-	    $contentBefore= Get-Content $file.FullName ;
-        Write-Host "Before: " $contentBefore ;
+	    $fileContent= Get-Content $file.FullName ;
+		Write-Host "File Name: " $file.FullName ;
+        Write-Host "File Content Before: " $fileContent ;
 		Write-Host "Start Parsing ...";
 
         #$contentTest1= $contentBefore | ForEach-Object {$_.Split("\n")};
 		#$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." };
 		
-		$contentBefore | ForEach-Object { 
+		$fileContent | ForEach-Object { 
+		
 		$rowcontent = $_.tostring();
+		Write-Host "rowcontent Before: " $rowcontent;
 		if($rowcontent.length -ge 2){
 		if($rowcontent.SubString(0,2) -eq ":::")
-		{$contentBefore.Replace($rowcontent,"");}
+		{ 
+		Write-Host "This row start with ':::', which is defined as private content." $rowcontent;
+		$fileContent.Replace($rowcontent,"");}
 		}		    
 		};
 
-
-		$contentTest2= Get-Content $file.FullName ;
-		Write-Host "contentTest2: " $contentTest2;
-
 		#Add-Content $file.FullName -Value "This is a test section! 1122-3" ;
-		$contentAfter= Get-Content $file.FullName ;
-		Write-Host "After: " $contentAfter ;
+		Write-Host "File Content After: " $fileContent ;
 	  }
 }
 
