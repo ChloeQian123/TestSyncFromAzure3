@@ -81,7 +81,7 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "modify a file";
 	$filelist = Get-ChildItem -Filter *.md;
 	ForEach($file in $filelist){
-	  Add-Content $file.FullName -Value "This is a test section! 1122-3" ;
+	  Add-Content $file.FullName -Value "This is a test section! 1124-5" ;
 	  Write-Host "Add to commit";
 	  git add $file.FullName
 	 }
@@ -90,7 +90,7 @@ Function PushtoGithub($GithubRepoUrl)
 	git status
 
 	Write-Host "Commit to local Repo";
-	git commit -m "test commit 1122-3 "
+	git commit -m "test commit 1124-5"
 
 	Write-Host "Push to remote Repo using https";
 
