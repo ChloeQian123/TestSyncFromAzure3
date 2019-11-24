@@ -104,7 +104,11 @@ Function SplitContent($SplitDir){
 		#$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." };
 		
 		$contentBefore | ForEach-Object { 
-		if($_.SubString(0,2).Equals(":::")){$contentBefore.Replace($_,"");}		    
+		$rowcontent = $_.tostring();
+		if($rowcontent.length -ge 2){
+		if($rowcontent.SubString(0,2) -eq ":::")
+		{$contentBefore.Replace($rowcontent,"");}
+		}		    
 		};
 
 
