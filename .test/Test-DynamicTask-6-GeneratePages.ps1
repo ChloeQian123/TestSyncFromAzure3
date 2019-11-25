@@ -117,9 +117,9 @@ Function SplitContent($SplitDir){
 		    Write-Host "first 3 chars:"$trimcontent.SubString(0,3);		
 		    if($trimcontent.SubString(0,3) -eq ":::"){ 
 		      Write-Host "This row start with ':::', which is defined as private content.";
-		      $newcontent.Replace($_,"");}}		    
+		      $newcontent = $newcontent.Replace($_,"");}}		    
 		};
-
+		Write-Host "newcontent is:" $newcontent ;
 		Set-Content -Path $file.FullName -Value $newcontent;
 
 		#Add-Content $file.FullName -Value "This is a test section! 1122-3" ;
