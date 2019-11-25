@@ -100,29 +100,29 @@ Function SplitContent($SplitDir){
 
      $fileList = Get-ChildItem -Path $SplitDir -Filter *.md;
 	 foreach ($file in $fileList) {
-	    $fileContent= Get-Content $file.FullName ;
+	    $fileContentbefore= Get-Content $file.FullName ;
 		Write-Host "File Name: " $file.FullName ;
-        Write-Host "File Content Before: " $fileContent ;
+        Write-Host "File Content Before: " $fileContentbefore ;
 		Write-Host "Start Parsing ...";
 
         #$contentTest1= $contentBefore | ForEach-Object {$_.Split("\n")};
 		#$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." };
 		
-		$fileContent | ForEach-Object { 		
-		  $rowcontent = $_.tostring();
-		  Write-Host "rowcontent:"$rowcontent;
-		  Write-Host "length:"$rowcontent.length;	
-		  $trimcontent = $rowcontent.Trim();
+		Get-Content $file.FullName | ForEach-Object { 		
+		  Write-Host "rowcontent:"$_;
+		  Write-Host "length:"$_.length;	
+		  $trimcontent = $_.Trim();
 		  Write-Host "trimcontent:"$trimcontent;
 		  if($trimcontent.length -ge 2){
 		    Write-Host "first 3 chars:"$trimcontent.SubString(0,3);		
 		    if($trimcontent.SubString(0,3) -eq ":::"){ 
 		      Write-Host "This row start with ':::', which is defined as private content.";
-		      $fileContent.Replace($rowcontent,"");}}		    
-		};
+		      $_.Replace($_,"");}}		    
+		}|Set-Content
 
 		#Add-Content $file.FullName -Value "This is a test section! 1122-3" ;
-		Write-Host "File Content After: " $fileContent ;
+		$fileContentafter= Get-Content $file.FullName ;
+		Write-Host "File Content After: " $fileContentafter ;
 	  }
 }
 
