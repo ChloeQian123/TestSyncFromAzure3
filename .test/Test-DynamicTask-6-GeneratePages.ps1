@@ -109,6 +109,7 @@ Function SplitContent($SplitDir){
 		  Write-Host "rowcontent: " $rowcontent;
 		  Write-Host "length: " $rowcontent.length;
 		  $trimcontent=$rowcontent.trim();
+		  Write-Host "trimcontent: " $trimcontent;
 		  if($trimcontent.length -ge 2){
 		    Write-Host "first 3 chars: " $trimcontent.SubString(0,2);		
 		    if($trimcontent.SubString(0,2) -eq ":::"){ 
