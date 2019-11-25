@@ -107,7 +107,7 @@ Function SplitContent($SplitDir){
 
         #$contentTest1= $contentBefore | ForEach-Object {$_.Split("\n")};
 		#$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." };
-		
+		$newcontent = $fileContentbefore;
 		Get-Content -Path $file.FullName | ForEach-Object { 		
 		  Write-Host "rowcontent:"$_;
 		  Write-Host "length:"$_.length;	
@@ -117,8 +117,10 @@ Function SplitContent($SplitDir){
 		    Write-Host "first 3 chars:"$trimcontent.SubString(0,3);		
 		    if($trimcontent.SubString(0,3) -eq ":::"){ 
 		      Write-Host "This row start with ':::', which is defined as private content.";
-		      $_.Replace($_,"");}}		    
-		}|Set-Content -Path $file.FullName ;
+		      $newcontent.Replace($_,"");}}		    
+		};
+
+		Set-Content -Path $file.FullName -Value $newcontent;
 
 		#Add-Content $file.FullName -Value "This is a test section! 1122-3" ;
 		$fileContentafter= Get-Content $file.FullName ;
