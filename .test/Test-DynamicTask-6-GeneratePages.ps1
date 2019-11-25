@@ -108,10 +108,10 @@ Function SplitContent($SplitDir){
 		  $rowcontent = $_.tostring();
 		  Write-Host "rowcontent: " $rowcontent;
 		  Write-Host "length: " $rowcontent.length;		  
-		  Write-Host "trimcontent: " $rowcontent.trim();
-		  if($rowcontent.trim().length -ge 2){
-		    Write-Host "first 3 chars: " $rowcontent.trim().SubString(0,2);		
-		    if($rowcontent.trim().SubString(0,2) -eq ":::"){ 
+		  Write-Host "trimcontent: " $rowcontent.Trim(" ");
+		  if($rowcontent.Trim(" ").length -ge 2){
+		    Write-Host "first 3 chars: " $rowcontent.Trim(" ").SubString(0,2);		
+		    if($rowcontent.Trim(" ").SubString(0,2) -eq ":::"){ 
 		      Write-Host "This row start with ':::', which is defined as private content.";
 		      $fileContent.Replace($rowcontent,"");}}		    
 		};
