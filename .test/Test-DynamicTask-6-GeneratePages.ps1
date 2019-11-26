@@ -158,7 +158,7 @@ Function SplitContent($SplitDir){
 		}
 		#check and remove the duplicate row interval 
 		for ($i=0; $i -lt $arMatchedList.Count; $i++){
-		   for($j=0; $j -lt $arMatchedList.Count; $j++){
+		   for($j=; $j -lt $arMatchedList.Count; $j++){
 		      if(($arMatchedList[$j].beginRowNum -lt $arMatchedList[$i].beginRowNum) -and ($arMatchedList[$j].endRowNum -gt $arMatchedList[$i].endRowNum)){
 			    Write-Host "row"$arMatchedList[$i].beginRowNum "to" $arMatchedList[$i].endRowNum "is included in row" $arMatchedList[$j].beginRowNum "to" $arMatchedList[$j].endRowNum;
 			  }
@@ -196,18 +196,15 @@ Function SplitContent($SplitDir){
 }
 
 Function CheckRowInterval($rowNum,$arr){
-  $arr|ForEach-Object{
-    Write-Host "beginTagName:"$_.beginTagName ;
-    Write-Host "beginRowNum:"$_.beginRowNum ;
-	Write-Host "endTagName:"$_.endTagName ;
-	Write-Host "endRowNum:"$_.endRowNum ;
+  $result = $false;
+  for($i=0;$i<$arr.Count;$i++){
     $begin = $_.beginRowNum ;
 	$end = $_.endRowNum ;
     if(($rowNum -ge $begin)-and($rowNum -le $end)){
-	  return $true;
+	  $result = $true;
 	} 
   }
-  return $false;
+  return $result;
 }
 
 
