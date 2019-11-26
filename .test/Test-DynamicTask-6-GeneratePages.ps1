@@ -96,51 +96,77 @@ Function Main() {
 Function SplitContent($SplitDir){
 
      $fileList = Get-ChildItem -Path $SplitDir -Filter *.md;
+	 
+	 $beginTag = "::: Confidentiality:Internal";
+	 $endTag = ":::";
+
 
 	 foreach ($file in $fileList) {
-	    
-		$object = [PSCustomObject]@{
-           Name = '::: Confidentiality:Internal'
-           rownum = 20
-        };
-
-	    $armaching = New-Object -TypeName System.Collections.ArrayList; # for ($x=0; $x -lt 10000; $x++) $ar.Add($x)
-        $armatchedlist = New-Object -TypeName System.Collections.ArrayList;
-
-		$armaching.Add($object)
-
-		$armaching|ForEach-Object {
-	       Write-Host "syntax:"$_.Name ;
-		   Write-Host "syntax:"$_.rownum ;
-		}
-
+	   
+	   #0.preparing
+	    $arMaching = New-Object -TypeName System.Collections.ArrayList; # for ($x=0; $x -lt 10000; $x++) $ar.Add($x)
+        $arMatchedList = New-Object -TypeName System.Collections.ArrayList;
 
 	    $fileContentbefore= Get-Content $file.FullName ;
 		Write-Host "File Name: " $file.FullName ;
         Write-Host "File Content Before: " $fileContentbefore ;
 		Write-Host "Start Parsing ...";
 
-        #$contentTest1= $contentBefore | ForEach-Object {$_.Split("\n")};
-		#$contentBefore | ForEach-Object { Add-Content $file.FullName -Value "This is line $_." };
-		$newcontent = $fileContentbefore;
-		Get-Content -Path $file.FullName | ForEach-Object { 		
-		  Write-Host "rowcontent:"$_;
-		  Write-Host "length:"$_.length;	
-		  $trimcontent = $_.Trim();
-		  Write-Host "trimcontent:"$trimcontent;
-		  if($trimcontent.length -ge 2){
-		    Write-Host "first 3 chars:"$trimcontent.SubString(0,3);		
-		    if($trimcontent.SubString(0,3) -eq ":::"){ 
-		      Write-Host "This row start with ':::', which is defined as private content.";
-		      $newcontent = $newcontent.Replace($_,"");}}		    
-		};
-		Write-Host "newcontent is:" $newcontent ;
-		Set-Content -Path $file.FullName -Value $newcontent;
+		#1.matching syntax then add its row number to matched list
+		$rowCount = 0;
+		Get-Content -Path $file.FullName | ForEach-Object { 
 
-		#Add-Content $file.FullName -Value "This is a test section! 1122-3" ;
-		$fileContentafter= Get-Content $file.FullName ;
-		Write-Host "File Content After: " $fileContentafter ;
-	  }
+		  $rowCount++;
+		  Write-Host "row" $rowCount "content:"$_;
+		  $trimContent = $_.Trim();
+
+		  if($trimContent -eq $beginTag){ 
+		      Write-Host "Find" $beginTag "in row" $rowCount;
+			  $beginTagObj= [PSCustomObject]@{
+                 tagName = $begintag
+                 rowNum = $rowCount
+              };
+			  $arMaching.Add($beginTagObj);
+		  }
+
+		  if($trimContent -eq $endTag){
+		      Write-Host "Find" $endtag "in row" $rowCount;
+			  if($arMaching.Count -ge 1){
+			    $matchedTagObj= [PSCustomObject]@{
+                 beginTagName = $arMaching[$arMaching.Count-1].tagName
+                 beginRowNum = $arMaching[$arMaching.Count-1].rowNum
+				 endTagName = $endTag
+				 endRowNum = $rowCount
+			     };
+			    $arMatchedList.Add($matchedTagObj);
+			    $arMaching.remove($arMaching[$arMaching.Count-1]);
+		      }
+		  }		    
+		};
+		
+
+		Write-Host "MachingArry";
+		$arMaching
+		Write-Host "MatchedArry";
+		$arMatchedList[($arMatchedList.count)..0]
+
+		#$arMaching|ForEach-Object {
+	    #   Write-Host "tag:"$_.Name ;
+		#   Write-Host "rownumber:"$_.rownum ;
+		#}
+
+		#$newcontent = $newcontent.Replace($_,"");
+
+		#2.update content according to syntax matched list
+		#$newcontent = $fileContentbefore;
+
+		#Write-Host "newcontent is:" $newcontent ;
+		#Set-Content -Path $file.FullName -Value $newcontent;
+
+
+		#$fileContentafter= Get-Content $file.FullName ;
+		#Write-Host "File Content After: " $fileContentafter ;
+	 }
 }
 
 
