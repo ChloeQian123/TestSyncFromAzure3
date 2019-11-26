@@ -94,12 +94,27 @@ Function Main() {
 
 #Exclude inner content
 Function SplitContent($SplitDir){
-		$teststring ="  :::  Test string. ";
-		Write-Host "Test string" $teststring;
-		Write-Host "Test Trim" $teststring.Trim();
 
      $fileList = Get-ChildItem -Path $SplitDir -Filter *.md;
+
 	 foreach ($file in $fileList) {
+	    
+		$object = [PSCustomObject]@{
+           Name = '::: Confidentiality:Internal'
+           rownum = 20
+        };
+
+	    $armaching = New-Object -TypeName System.Collections.ArrayList; # for ($x=0; $x -lt 10000; $x++) $ar.Add($x)
+        $armatchedlist = New-Object -TypeName System.Collections.ArrayList;
+
+		$armaching.Add($object)
+
+		$armaching|ForEach-Object {
+	       Write-Host "syntax:"$_.Name ;
+		   Write-Host "syntax:"$_.rownum ;
+		}
+
+
 	    $fileContentbefore= Get-Content $file.FullName ;
 		Write-Host "File Name: " $file.FullName ;
         Write-Host "File Content Before: " $fileContentbefore ;
@@ -127,6 +142,16 @@ Function SplitContent($SplitDir){
 		Write-Host "File Content After: " $fileContentafter ;
 	  }
 }
+
+
+
+
+
+
+
+
+
+
 
  Function GetWikiName($fullName){
     $pos=$fullName.LastIndexOf("CWQL\");
