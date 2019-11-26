@@ -151,14 +151,14 @@ Function SplitContent($SplitDir){
 		}
 		Write-Host "MatchedArry";
 		$arMatchedList|ForEach-Object {
-	       Write-Host "beginTagName:"$_.beginTagName ;
+	       Write-Host "beginTagName:"$_.beginTagName ; 
 		   Write-Host "beginRowNum:"$_.beginRowNum ;
 		   Write-Host "endTagName:"$_.endTagName ;
 		   Write-Host "endRowNum:"$_.endRowNum ;
 		}
 		#check and remove the duplicate row interval 
 		for ($i=0; $i -lt $arMatchedList.Count; $i++){
-		   for($j=$arMatchedList.Count-1;$j -gt $i; $j--){
+		   for($j=0; $j -lt $arMatchedList.Count; $j++){
 		      if(($arMatchedList[$j].beginRowNum -lt $arMatchedList[$i].beginRowNum) -and ($arMatchedList[$j].endRowNum -gt $arMatchedList[$i].endRowNum)){
 			    Write-Host "row"$arMatchedList[$i].beginRowNum "to" $arMatchedList[$i].endRowNum "is included in row" $arMatchedList[$j].beginRowNum "to" $arMatchedList[$j].endRowNum;
 			  }
@@ -180,7 +180,10 @@ Function SplitContent($SplitDir){
 		$rowCount = 0;
 		$fileContentbefore | ForEach-Object {
 		  $rowCount++;
-		  if(!CheckRowInterval($rowCount,$arForUpdate)){
+		  if(CheckRowInterval($rowCount,$arForUpdate)-eq false){
+		    
+		  }
+		  else{
 		    $newcontent+=$_;
 		  }
 		}
