@@ -89,7 +89,6 @@ return "";
 Function Main() {
     $splitDir=$CurrentyDir+"\.split\";
     SplitContent($splitDir);
-
 }
 
 #Exclude inner content
@@ -103,9 +102,10 @@ Function SplitContent($SplitDir){
 
 	 foreach ($file in $fileList) {
 	   
-	   #0.preparing
-	    $arMaching = New-Object -TypeName System.Collections.ArrayList; # for ($x=0; $x -lt 10000; $x++) $ar.Add($x)
+	    #0.preparing
+	    $arMaching = New-Object -TypeName System.Collections.ArrayList;
         $arMatchedList = New-Object -TypeName System.Collections.ArrayList;
+		$arForUpdate = New-Object -TypeName System.Collections.ArrayList;
 
 	    $fileContentbefore= Get-Content $file.FullName ;
 		Write-Host "File Name: " $file.FullName ;
@@ -131,7 +131,7 @@ Function SplitContent($SplitDir){
 
 		  if($trimContent -eq $endTag){
 		      Write-Host "Find" $endtag "in row" $rowCount;
-			  if($arMaching.Count -ge 1){
+			  if($arMaching.Count -gt 0){
 			    $matchedTagObj= [PSCustomObject]@{
                  beginTagName = $arMaching[$arMaching.Count-1].tagName
                  beginRowNum = $arMaching[$arMaching.Count-1].rowNum
@@ -143,7 +143,6 @@ Function SplitContent($SplitDir){
 		      }
 		  }		    
 		};
-		
 
 		Write-Host "MachingArry";
 		$arMaching|ForEach-Object {
@@ -157,29 +156,49 @@ Function SplitContent($SplitDir){
 		   Write-Host "endTagName:"$_.endTagName ;
 		   Write-Host "endRowNum:"$_.endRowNum ;
 		}
+		#check and remove the duplicate row interval 
+		for ($i=0; $i -lt $arMatchedList.Count; $i++){
+		   for($j=$arMatchedList.Count-1-i;$j -gt 0; $j--){
+		      if(($arMatchedList[j].beginRowNum -lt $arMatchedList[i].beginRowNum) -and ($arMatchedList[j].endRowNum -gt $arMatchedList[i].endRowNum)){
+			    Write-Host "row"$arMatchedList[i].beginRowNum "to" $arMatchedList[i].endRowNum "is included in row" $arMatchedList[j].beginRowNum "to" $arMatchedList[j].endRowNum;
+			  }
+			  else{
+			    $arForUpdate.Add($arMatchedList[i]);
+			  }
+		   }
+		}
+		Write-Host "updateArry";
+		$arForUpdate|ForEach-Object {
+	       Write-Host "beginTagName:"$_.beginTagName ;
+		   Write-Host "beginRowNum:"$_.beginRowNum ;
+		   Write-Host "endTagName:"$_.endTagName ;
+		   Write-Host "endRowNum:"$_.endRowNum ;
+		}
 
-		#$newcontent = $newcontent.Replace($_,"");
+		#2.update content according to rownumber from update list
+		$newcontent = "";
+		$rowCount = 0;
+		$fileContentbefore | ForEach-Object {
+		  $rowCount++;
+		  if(CheckRowInterval($rowCount,$arForUpdate))
+		  $newcontent+=$_;
+		}
 
-		#2.update content according to syntax matched list
-		#$newcontent = $fileContentbefore;
-
-		#Write-Host "newcontent is:" $newcontent ;
-		#Set-Content -Path $file.FullName -Value $newcontent;
+		Write-Host "newcontent is:" $newcontent ;
+		Set-Content -Path $file.FullName -Value $newcontent;
 
 
-		#$fileContentafter= Get-Content $file.FullName ;
-		#Write-Host "File Content After: " $fileContentafter ;
+		$fileContentafter= Get-Content $file.FullName ;
+		Write-Host "File Content After: " $fileContentafter ;
 	 }
 }
 
-
-
-
-
-
-
-
-
+Function CheckRowInterval($rowNum,$arr){
+  $arr|ForEach-Object{
+    if(($rowNum -ge _.beginRowNum)-and($rowNum -le _.endRowNum)){return $true;} 
+  }
+  return $false;
+}
 
 
  Function GetWikiName($fullName){
