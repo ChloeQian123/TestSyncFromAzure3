@@ -157,16 +157,17 @@ Function SplitContent($SplitDir){
 		   Write-Host "endRowNum:"$_.endRowNum ;
 		}
 		#check and remove the duplicate row interval 
-		for ($i=0; $i -lt $arMatchedList.Count; $i++){
-		   for($j=$arMatchedList.Count-1; $j -gt $i+1; $j--){
-		      if(($arMatchedList[$j].beginRowNum -lt $arMatchedList[$i].beginRowNum) -and ($arMatchedList[$j].endRowNum -gt $arMatchedList[$i].endRowNum)){
-			    Write-Host "row"$arMatchedList[$i].beginRowNum "to" $arMatchedList[$i].endRowNum "is included in row" $arMatchedList[$j].beginRowNum "to" $arMatchedList[$j].endRowNum;
-			  }
-			  else{
-			    $arForUpdate.Add($arMatchedList[$i]);
-			  }
-		   }
-		}
+		#for ($i=0; $i -lt $arMatchedList.Count; $i++){
+		#   for($j=$arMatchedList.Count-1; $j -gt $i+1; $j--){
+		#      if(($arMatchedList[$j].beginRowNum -lt $arMatchedList[$i].beginRowNum) -and ($arMatchedList[$j].endRowNum -gt $arMatchedList[$i].endRowNum)){
+		#	    Write-Host "row"$arMatchedList[$i].beginRowNum "to" $arMatchedList[$i].endRowNum "is included in row" $arMatchedList[$j].beginRowNum "to" $arMatchedList[$j].endRowNum;
+		#	  }
+		#	  else{
+		##	    $arForUpdate.Add($arMatchedList[$i]);
+		#	  }
+		#   }
+		#}
+		$arForUpdate=$arMatchedList;
 		Write-Host "updateArry";
 		$arForUpdate|ForEach-Object {
 	       Write-Host "beginTagName:"$_.beginTagName ;
@@ -178,11 +179,12 @@ Function SplitContent($SplitDir){
 		#2.update content according to rownumber from update list
 		$newcontent = "";
 		$rowCount = 0;
+		Clear-Content -Path $file.FullName;
 		$fileContentbefore | ForEach-Object {
 		  $rowCount++;
 		  $checkresult=CheckRowInterval($rowCount,$arForUpdate);
 		  if($checkresult -eq $false){
-		    $newcontent+=$_;
+		    Add-Content $file.FullName -Value $_ ;
 		  }
 		}
 
