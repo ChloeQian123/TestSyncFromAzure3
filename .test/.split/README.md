@@ -1,4 +1,1 @@
-# ChloeQian123.github.io
-ChloeQian123.github.io
-
-Readme from .split folder.
+# ChloeQian123.github.ioChloeQian123.github.ioReadme from .split folder.
