@@ -180,8 +180,9 @@ Function SplitContent($SplitDir){
 		$rowCount = 0;
 		$fileContentbefore | ForEach-Object {
 		  $rowCount++;
-		  if(CheckRowInterval($rowCount,$arForUpdate))
-		  $newcontent+=$_;
+		  if(CheckRowInterval($rowCount,$arForUpdate)){
+		    $newcontent+=$_;
+		  }
 		}
 
 		Write-Host "newcontent is:" $newcontent ;
