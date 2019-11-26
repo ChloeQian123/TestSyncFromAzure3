@@ -197,7 +197,7 @@ Function SplitContent($SplitDir){
 
 Function CheckRowInterval($rowNum,$arr){
   $result = $false;
-  for($i=0;$i<$arr.Count;$i++){
+  for($i=0;$i -lt $arr.Count;$i++){
     $begin = $_.beginRowNum ;
 	$end = $_.endRowNum ;
     if(($rowNum -ge $begin)-and($rowNum -le $end)){
