@@ -180,10 +180,8 @@ Function SplitContent($SplitDir){
 		$rowCount = 0;
 		$fileContentbefore | ForEach-Object {
 		  $rowCount++;
-		  if(CheckRowInterval($rowCount,$arForUpdate)-eq false){
-		    
-		  }
-		  else{
+		  $checkresult=CheckRowInterval($rowCount,$arForUpdate);
+		  if($checkresult -eq $false){
 		    $newcontent+=$_;
 		  }
 		}
@@ -199,8 +197,12 @@ Function SplitContent($SplitDir){
 
 Function CheckRowInterval($rowNum,$arr){
   $arr|ForEach-Object{
-           $begin = $_.beginRowNum ;
-		   $end = $_.endRowNum ;
+    Write-Host "beginTagName:"$_.beginTagName ;
+    Write-Host "beginRowNum:"$_.beginRowNum ;
+	Write-Host "endTagName:"$_.endTagName ;
+	Write-Host "endRowNum:"$_.endRowNum ;
+    $begin = $_.beginRowNum ;
+	$end = $_.endRowNum ;
     if(($rowNum -ge $begin)-and($rowNum -le $end)){
 	  return $true;
 	} 
