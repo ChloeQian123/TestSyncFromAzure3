@@ -183,6 +183,7 @@ Function SplitContent($SplitDir){
 		$fileContentbefore | ForEach-Object {
 		  $rowCount++;
 		  $checkresult=CheckRowInterval($rowCount,$arForUpdate);
+		  Write-Host "row" $rowCount "checkRowInterval is" $checkresult;
 		  if($checkresult -eq $false){
 		    Add-Content $file.FullName -Value $_ ;
 		  }
