@@ -146,14 +146,17 @@ Function SplitContent($SplitDir){
 		
 
 		Write-Host "MachingArry";
-		$arMaching
+		$arMaching|ForEach-Object {
+	       Write-Host "tagName:"$_.tagName ;
+		   Write-Host "rowNum:"$_.rowNum ;
+		}
 		Write-Host "MatchedArry";
-		$arMatchedList[($arMatchedList.count)..0]
-
-		#$arMaching|ForEach-Object {
-	    #   Write-Host "tag:"$_.Name ;
-		#   Write-Host "rownumber:"$_.rownum ;
-		#}
+		$arMatchedList|ForEach-Object {
+	       Write-Host "beginTagName:"$_.beginTagName ;
+		   Write-Host "beginRowNum:"$_.beginRowNum ;
+		   Write-Host "endTagName:"$_.endTagName ;
+		   Write-Host "endRowNum:"$_.endRowNum ;
+		}
 
 		#$newcontent = $newcontent.Replace($_,"");
 
