@@ -177,15 +177,27 @@ Function SplitContent($SplitDir){
 		  #Write-Host "row" $rowCount "checkRowInterval is" $checkresult;
 		  
 		  if(-not $checkresult){
-		    $newcontent+=$_+"`r`n";
+		    #$newcontent+=$_+"`r`n";
 		  }
 		}
 
 
+		$offset=0;
+		for($i=0;$i -lt $arForUpdate.Count;$i++){
+		  $begin = $arForUpdate[$i].beginRowNum-$offset;
+		  $end = $arForUpdate[$i].endRowNum-$offset;
+		  $fileContentbefore=$fileContentbefore[0..($begin-1)]+$fileContentbefore[($end+1)..$fileContentbefore.count]
+		  $offset=$arForUpdate[$i].endRowNum-$arForUpdate[$i].beginRowNum;
+		}
+
+		$fileContentbefore
+
+
+
 		#$fileContentbefore | Select-Object -Skip 1 | Set-Content b.txt
 
-		Write-Host "newcontent is:" $newcontent ;
-		Set-Content -Path $file.FullName -Value $newcontent;
+		Write-Host "newcontent is:" $fileContentbefore ;
+		Set-Content -Path $file.FullName -Value $fileContentbefore;
 
 
 		$fileContentafter= Get-Content $file.FullName ;
