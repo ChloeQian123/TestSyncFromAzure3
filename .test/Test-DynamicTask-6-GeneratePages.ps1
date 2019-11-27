@@ -164,13 +164,21 @@ Function SplitContent($SplitDir){
 		#2.3 update content according to rownumber from update list
 		$newcontent = $fileContentbefore;
 
-		$offset=0;
-		for($i=0;$i -lt $arForUpdate.Count;$i++){
-		  $begin = $arForUpdate[$i].beginRowNum-$offset;
-		  $end = $arForUpdate[$i].endRowNum-$offset;
-		  $newcontent=$newcontent[0..($begin-2)]+$newcontent[($end)..$newcontent.count]
-		  $offset=$arForUpdate[$i].endRowNum-$arForUpdate[$i].beginRowNum+1;
+		#$offset=0;
+		#for($i=0;$i -lt $arForUpdate.Count;$i++){
+		#  $begin = $arForUpdate[$i].beginRowNum-$offset;
+		#  $end = $arForUpdate[$i].endRowNum-$offset;
+		#  $newcontent=$newcontent[0..($begin-2)]+$newcontent[($end)..$newcontent.count]
+		#  $offset=$arForUpdate[$i].endRowNum-$arForUpdate[$i].beginRowNum+1;
+		#}
+
+		$arForUpdate[$arForUpdate.Count..0]|ForEach-Object {
+		  $begin = $_.beginRowNum;
+		  $end = $_.endRowNum;
+		  $newcontent=$newcontent[0..($begin-1)]+$newcontent[($end)..$newcontent.count]
 		}
+
+
 		#$fileContentbefore | Select-Object -Skip 1 | Set-Content b.txt
 
 		Write-Host "newcontent is:" $newcontent ;
@@ -185,6 +193,7 @@ Function SplitContent($SplitDir){
 		Write-Host "Part I Tags:";	
 		$tags = $fileContentbefore.Split("[**Tags**]");
 		$tags = $tags[0];
+		Write-Host $tags;	
 		$tags| ForEach-Object{
 		  Write-Host $_;	
 		}
