@@ -97,6 +97,7 @@ Function SplitContent($SplitDir){
      $fileList = Get-ChildItem -Path $SplitDir -Filter *.md;
 
 	 foreach ($file in $fileList) {
+	    $fileContentbefore= Get-Content $file.FullName ;
 		Write-Host "File Name: " $file.FullName ;
         Write-Host "File Content Before: " $fileContentbefore ;
 		Write-Host "Start Parsing ...";	 
@@ -165,7 +166,7 @@ Function SplitContent($SplitDir){
         $arMatchedList = New-Object -TypeName System.Collections.ArrayList;
 	    $beginTag = "::: Confidentiality:Internal";
 	    $endTag = ":::";
-	    $fileContentbefore= Get-Content $file.FullName ;
+	    
 		
 		#2.2 matching syntax then add its row number to matched list
 		$rowCount = 0;
