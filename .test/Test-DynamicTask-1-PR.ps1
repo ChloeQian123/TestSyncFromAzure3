@@ -151,9 +151,11 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		$CommitTitleText = "Automatic Dynamic Content Update"
 
 		$DevOPSDomain = "dev.azure.com"
+		$ReposName2 = "SyncTestRepo"
+		$RemoteURL2 = "https://${OrganizationName}:$PAT@$DevOPSDomain/$OrganizationName/$ProjectName/_git/$ReposName2"
 		$RemoteURL = "https://${OrganizationName}:$PAT@$DevOPSDomain/$OrganizationName/$ProjectName/_git/$ReposName"
 		$PRResponseURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName/pullrequests?api-version=5.0"
-    
+        $RemoteURL2 = "https://ChloeQian123@dev.azure.com/ChloeQian123/ChloeQian123.github.io/_git/SyncTestRepo"
 		# Commit our changes to a new branch, and push
 		git branch $branchName
 		git checkout $branchName
@@ -168,6 +170,8 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		git push -u auth $branchName
 
         git remote set-url origin $RemoteURL
+		git remote add origin $RemoteURL2
+
 		$today = [DateTime]::Now;
         $dateStringDel= $today.AddDays(-7).ToString("yyyy-MM-dd")
 		$dateStringDel
