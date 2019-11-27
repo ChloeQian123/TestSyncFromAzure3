@@ -125,3 +125,4 @@ After these steps it is now possible to login with the new ssh-private-key which
 
 *The same steps described can also be used to add a new user to each of the VMSS nodes. Which means in case the user 'admin' does not exists it is created and gets sudo rights granted.*
 
+
