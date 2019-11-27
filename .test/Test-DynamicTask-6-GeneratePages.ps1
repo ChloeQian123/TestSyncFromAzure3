@@ -156,6 +156,7 @@ Function SplitContent($SplitDir){
 		   Write-Host "endTagName:"$_.endTagName ;
 		   Write-Host "endRowNum:"$_.endRowNum ;
 		}
+
 		#check and remove the duplicate row interval 
 		#for ($i=0; $i -lt $arMatchedList.Count; $i++){
 		#   for($j=$arMatchedList.Count-1; $j -gt $i+1; $j--){
@@ -167,6 +168,7 @@ Function SplitContent($SplitDir){
 		#	  }
 		#   }
 		#}
+
 		$arForUpdate=$arMatchedList;
 		Write-Host "updateArry";
 		$arForUpdate|ForEach-Object {
@@ -184,8 +186,9 @@ Function SplitContent($SplitDir){
 		  $rowCount++;
 		  $checkresult=CheckRowInterval($rowCount,$arForUpdate);
 		  Write-Host "row" $rowCount "checkRowInterval is" $checkresult;
+		  Add-Content $file.FullName -Value $_ ;
 		  if($checkresult -eq $false){
-		    Add-Content $file.FullName -Value $_ ;
+		    
 		  }
 		}
 
