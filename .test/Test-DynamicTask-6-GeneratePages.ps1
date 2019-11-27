@@ -186,6 +186,7 @@ Function SplitContent($SplitDir){
 		  $rowCount++;
 		  $checkresult=CheckRowInterval($rowCount,$arForUpdate);
 		  Write-Host "row" $rowCount "checkRowInterval is" $checkresult;
+
 		  Add-Content $file.FullName -Value $_ ;
 		  if($checkresult -eq $false){
 		    
@@ -205,11 +206,12 @@ Function CheckRowInterval($rowNum,$arr){
   $result = $false;
   for($i=0;$i -lt $arr.Count;$i++){
     $begin = $_.beginRowNum ;
-	$end = $_.endRowNum ;
+	$end = $_.endRowNum ;	
     if(($rowNum -ge $begin)-and($rowNum -le $end)){
 	  $result = $true;
 	} 
   }
+  Write-Host "checking row" $rowNum ",beginRowNum is:" $begin "endRowNum is" $end ", result is $result" ;
   return $result;
 }
 
