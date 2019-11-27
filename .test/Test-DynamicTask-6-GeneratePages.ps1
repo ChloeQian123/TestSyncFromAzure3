@@ -144,19 +144,6 @@ Function SplitContent($SplitDir){
 		  }		    
 		};
 
-		Write-Host "MachingArry";
-		$arMaching|ForEach-Object {
-	       Write-Host "tagName:"$_.tagName ;
-		   Write-Host "rowNum:"$_.rowNum ;
-		}
-		Write-Host "MatchedArry";
-		$arMatchedList|ForEach-Object {
-	       Write-Host "beginTagName:"$_.beginTagName ; 
-		   Write-Host "beginRowNum:"$_.beginRowNum ;
-		   Write-Host "endTagName:"$_.endTagName ;
-		   Write-Host "endRowNum:"$_.endRowNum ;
-		}
-
 		#check and remove the duplicate row interval 
 		#for ($i=0; $i -lt $arMatchedList.Count; $i++){
 		#   for($j=$arMatchedList.Count-1; $j -gt $i+1; $j--){
@@ -177,6 +164,8 @@ Function SplitContent($SplitDir){
 		   Write-Host "endTagName:"$_.endTagName ;
 		   Write-Host "endRowNum:"$_.endRowNum ;
 		}
+		
+
 
 		#2.update content according to rownumber from update list
 		$newcontent = "";
@@ -184,15 +173,16 @@ Function SplitContent($SplitDir){
 		Clear-Content -Path $file.FullName;
 		$fileContentbefore | ForEach-Object {
 		  $rowCount++;
-		  $checkresult = CheckRowInterval($rowCount,$arForUpdate);
-		  Write-Host "row" $rowCount "checkRowInterval is" $checkresult;
-
-		  Add-Content -Path $file.FullName -Value $_ ;
-
-		  if($checkresult -eq $false){
-		    
-		  }
+		  #$checkresult = CheckRowInterval($rowCount,$arForUpdate);
+		  #Write-Host "row" $rowCount "checkRowInterval is" $checkresult;
+		  $newcontent+=$_"\r\n";
+		  #Add-Content -Path $file.FullName -Value $_ ;
+		  #if($checkresult -eq $false){		    
+		  #}
 		}
+
+
+		#$fileContentbefore | Select-Object -Skip 1 | Set-Content b.txt
 
 		Write-Host "newcontent is:" $newcontent ;
 		Set-Content -Path $file.FullName -Value $newcontent;
