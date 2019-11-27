@@ -142,7 +142,7 @@ Function SplitContent($SplitDir){
 		};
 		
 		if($arMatchedList.Count -ge 1){
-		  for($i=$arMatchedList[0].beginRowNum+1; $i - lt $arMatchedList[0].endRowNum ;$i++){
+		  for($i=$arMatchedList[0].beginRowNum+1; $i -lt $arMatchedList[0].endRowNum ;$i++){
 		    if($fileContentbefore[i].Trim().SubString(0,1) -eq '-'){
 			  $forUpdateObj= [PSCustomObject]@{
                  beginTagName = $beginTag
