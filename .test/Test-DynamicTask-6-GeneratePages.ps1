@@ -101,10 +101,7 @@ Function SplitContent($SplitDir){
         Write-Host "File Content Before: " $fileContentbefore ;
 		Write-Host "Start Parsing ...";	 
 
-	    #1 parsing Tags
-		Write-Host "Part I Tags:";	
-		
-		Write-Host "Part I Complete:";	
+	   
 
 		#2 parsing content
 	    #2.1 preparing
@@ -172,7 +169,7 @@ Function SplitContent($SplitDir){
 		  $begin = $arForUpdate[$i].beginRowNum-$offset;
 		  $end = $arForUpdate[$i].endRowNum-$offset;
 		  $newcontent=$newcontent[0..($begin-2)]+$newcontent[($end)..$newcontent.count]
-		  $offset=$arForUpdate[$i].endRowNum-$arForUpdate[$i].beginRowNum;
+		  $offset=$arForUpdate[$i].endRowNum-$arForUpdate[$i].beginRowNum+1;
 		}
 		#$fileContentbefore | Select-Object -Skip 1 | Set-Content b.txt
 
@@ -183,6 +180,16 @@ Function SplitContent($SplitDir){
 		Write-Host "File Content After: " $fileContentafter ;
 		
 		Write-Host "Part II Complete:";	
+
+		 #1 parsing Tags
+		Write-Host "Part I Tags:";	
+		$tags = $fileContentbefore.Split("[**Tags**]");
+		$tags = $tags[0];
+		$tags| ForEach-Object{
+		  Write-Host $_;	
+		}
+
+		Write-Host "Part I Complete:";	
 	 }
 }
 
