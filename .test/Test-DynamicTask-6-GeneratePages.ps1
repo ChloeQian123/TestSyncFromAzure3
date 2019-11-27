@@ -136,10 +136,6 @@ Function SplitContent($SplitDir){
 			    $arMaching.remove($arMaching[$arMaching.Count-1]);
 		      }
 		  }	
-		  if($arMatchedList.Count -ge 1){
-		    Write-Host "Find one matched BeginTag:"$beginTag "and EndTag:"$endTag;	
-		    Break;
-		  }
 		};
 		
 		if($arMatchedList.Count -ge 1){
