@@ -155,7 +155,7 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		$RemoteURL2 = "https://${OrganizationName}:$PAT@$DevOPSDomain/$OrganizationName/$ProjectName/_git/$ReposName2"
 		$RemoteURL = "https://${OrganizationName}:$PAT@$DevOPSDomain/$OrganizationName/$ProjectName/_git/$ReposName"
 		$PRResponseURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName/pullrequests?api-version=5.0"
-        $RemoteURL2 = "https://ChloeQian123@dev.azure.com/ChloeQian123/ChloeQian123.github.io/_git/SyncTestRepo"
+
 		# Commit our changes to a new branch, and push
 		git branch $branchName
 		git checkout $branchName
