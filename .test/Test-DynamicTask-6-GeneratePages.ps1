@@ -95,31 +95,33 @@ Function Main() {
 Function SplitContent($SplitDir){
 
      $fileList = Get-ChildItem -Path $SplitDir -Filter *.md;
-	 
-	 $beginTag = "::: Confidentiality:Internal";
-	 $endTag = ":::";
-
 
 	 foreach ($file in $fileList) {
-	   
-	    #0.preparing
+		Write-Host "File Name: " $file.FullName ;
+        Write-Host "File Content Before: " $fileContentbefore ;
+		Write-Host "Start Parsing ...";	 
+
+	    #1 parsing Tags
+		Write-Host "Part I Tags:";	
+		
+		Write-Host "Part I Complete:";	
+
+		#2 parsing content
+	    #2.1 preparing
+		Write-Host "Part II Content:";	
 	    $arMaching = New-Object -TypeName System.Collections.ArrayList;
         $arMatchedList = New-Object -TypeName System.Collections.ArrayList;
 		$arForUpdate = New-Object -TypeName System.Collections.ArrayList;
-
+	    $beginTag = "::: Confidentiality:Internal";
+	    $endTag = ":::";
 	    $fileContentbefore= Get-Content $file.FullName ;
-		Write-Host "File Name: " $file.FullName ;
-        Write-Host "File Content Before: " $fileContentbefore ;
-		Write-Host "Start Parsing ...";
-
-		#1.matching syntax then add its row number to matched list
+		
+		#2.2 matching syntax then add its row number to matched list
 		$rowCount = 0;
 		Get-Content -Path $file.FullName | ForEach-Object { 
-
 		  $rowCount++;
 		  Write-Host "row" $rowCount "content:"$_;
 		  $trimContent = $_.Trim();
-
 		  if($trimContent -eq $beginTag){ 
 		      Write-Host "Find" $beginTag "in row" $rowCount;
 			  $beginTagObj= [PSCustomObject]@{
@@ -128,7 +130,6 @@ Function SplitContent($SplitDir){
               };
 			  $arMaching.Add($beginTagObj);
 		  }
-
 		  if($trimContent -eq $endTag){
 		      Write-Host "Find" $endtag "in row" $rowCount;
 			  if($arMaching.Count -gt 0){
@@ -143,7 +144,6 @@ Function SplitContent($SplitDir){
 		      }
 		  }		    
 		};
-
 		#check and remove the duplicate row interval 
 		#for ($i=0; $i -lt $arMatchedList.Count; $i++){
 		#   for($j=$arMatchedList.Count-1; $j -gt $i+1; $j--){
@@ -155,7 +155,6 @@ Function SplitContent($SplitDir){
 		#	  }
 		#   }
 		#}
-
 		$arForUpdate=$arMatchedList;
 		Write-Host "updateArry";
 		$arForUpdate|ForEach-Object {
@@ -163,45 +162,27 @@ Function SplitContent($SplitDir){
 		   Write-Host "beginRowNum:"$_.beginRowNum ;
 		   Write-Host "endTagName:"$_.endTagName ;
 		   Write-Host "endRowNum:"$_.endRowNum ;
-		}
-		
+		}		
 
-
-		#2.update content according to rownumber from update list
-		$newcontent = "";
-		$rowCount = 0;
-		Clear-Content -Path $file.FullName;
-		$fileContentbefore | ForEach-Object {
-		  $rowCount++;
-		  $checkresult = CheckRowInterval($rowCount,$arForUpdate);
-		  #Write-Host "row" $rowCount "checkRowInterval is" $checkresult;
-		  
-		  if(-not $checkresult){
-		    #$newcontent+=$_+"`r`n";
-		  }
-		}
-
+		#2.3 update content according to rownumber from update list
+		$newcontent = $fileContentbefore;
 
 		$offset=1;
 		for($i=0;$i -lt $arForUpdate.Count;$i++){
 		  $begin = $arForUpdate[$i].beginRowNum-$offset;
 		  $end = $arForUpdate[$i].endRowNum-$offset;
-		  $fileContentbefore=$fileContentbefore[0..($begin-1)]+$fileContentbefore[($end+1)..$fileContentbefore.count]
+		  $newcontent=$newcontent[0..($begin-1)]+$newcontent[($end)..$newcontent.count]
 		  $offset=$arForUpdate[$i].endRowNum-$arForUpdate[$i].beginRowNum;
 		}
-
-		$fileContentbefore
-
-
-
 		#$fileContentbefore | Select-Object -Skip 1 | Set-Content b.txt
 
-		Write-Host "newcontent is:" $fileContentbefore ;
-		Set-Content -Path $file.FullName -Value $fileContentbefore;
-
+		Write-Host "newcontent is:" $newcontent ;
+		Set-Content -Path $file.FullName -Value $newcontent;
 
 		$fileContentafter= Get-Content $file.FullName ;
 		Write-Host "File Content After: " $fileContentafter ;
+		
+		Write-Host "Part II Complete:";	
 	 }
 }
 
