@@ -100,15 +100,69 @@ Function SplitContent($SplitDir){
 		Write-Host "File Name: " $file.FullName ;
         Write-Host "File Content Before: " $fileContentbefore ;
 		Write-Host "Start Parsing ...";	 
+		$arForUpdate = New-Object -TypeName System.Collections.ArrayList;
 
-	   
+		#1 parsing Tags
+		Write-Host "Part I Tags:";
+		$arMaching = New-Object -TypeName System.Collections.ArrayList;
+        $arMatchedList = New-Object -TypeName System.Collections.ArrayList;
+		$beginTag = "Tags:";
+	    $endTag = "---";
+		$rowCount =0;
+
+		$fileContentbefore | ForEach-Object { 
+		  $rowCount++;
+		  Write-Host "row" $rowCount "content:"$_;
+		  $trimContent = $_.Trim();
+		  if($trimContent -eq $beginTag){ 
+		      Write-Host "Find" $beginTag "in row" $rowCount;
+			  $beginTagObj= [PSCustomObject]@{
+                 tagName = $begintag
+                 rowNum = $rowCount
+              };
+			  $arMaching.Add($beginTagObj);
+		  }
+		  if($trimContent -eq $endTag){
+		      Write-Host "Find" $endtag "in row" $rowCount;
+			  if($arMaching.Count -gt 0){
+			    $matchedTagObj= [PSCustomObject]@{
+                 beginTagName = $arMaching[$arMaching.Count-1].tagName
+                 beginRowNum = $arMaching[$arMaching.Count-1].rowNum
+				 endTagName = $endTag
+				 endRowNum = $rowCount
+			     };
+			    $arMatchedList.Add($matchedTagObj);
+			    $arMaching.remove($arMaching[$arMaching.Count-1]);
+		      }
+		  }	
+		  if($arMatchedList.Count -ge 1){
+		    Write-Host "Find one matched BeginTag:"$beginTag "and EndTag:"$endTag;	
+		    Break;
+		  }
+		};
+		
+		if($arMatchedList.Count -ge 1){
+		  for($i=$arMatchedList[0].beginRowNum+1; $i - lt $arMatchedList[0].endRowNum ;$i++){
+		    if($fileContentbefore[i].Trim().SubString(0,1) -eq '-'){
+			  $forUpdateObj= [PSCustomObject]@{
+                 beginTagName = $beginTag
+                 beginRowNum = $i
+				 endTagName = $endTag
+				 endRowNum = $i
+			     };
+			    $arForUpdate.Add($forUpdateObj);
+			}
+		  }
+		}
+
+		Write-Host "Part I Complete:";	
 
 		#2 parsing content
 	    #2.1 preparing
 		Write-Host "Part II Content:";	
+		#$arForUpdate = New-Object -TypeName System.Collections.ArrayList;
 	    $arMaching = New-Object -TypeName System.Collections.ArrayList;
         $arMatchedList = New-Object -TypeName System.Collections.ArrayList;
-		$arForUpdate = New-Object -TypeName System.Collections.ArrayList;
 	    $beginTag = "::: Confidentiality:Internal";
 	    $endTag = ":::";
 	    $fileContentbefore= Get-Content $file.FullName ;
@@ -152,53 +206,28 @@ Function SplitContent($SplitDir){
 		#	  }
 		#   }
 		#}
-		$arForUpdate=$arMatchedList;
-		Write-Host "updateArry";
+		$arMatchedList|ForEach-Object {
+		  $arForUpdate.Add($_)
+		}
 		$arForUpdate|ForEach-Object {
-	       Write-Host "beginTagName:"$_.beginTagName ;
-		   Write-Host "beginRowNum:"$_.beginRowNum ;
-		   Write-Host "endTagName:"$_.endTagName ;
-		   Write-Host "endRowNum:"$_.endRowNum ;
-		}		
+		  Write-Host $_;
+		}
+
 
 		#2.3 update content according to rownumber from update list
 		$newcontent = $fileContentbefore;
-
-		#$offset=0;
-		#for($i=0;$i -lt $arForUpdate.Count;$i++){
-		#  $begin = $arForUpdate[$i].beginRowNum-$offset;
-		#  $end = $arForUpdate[$i].endRowNum-$offset;
-		#  $newcontent=$newcontent[0..($begin-2)]+$newcontent[($end)..$newcontent.count]
-		#  $offset=$arForUpdate[$i].endRowNum-$arForUpdate[$i].beginRowNum+1;
-		#}
-
 		$arForUpdate[$arForUpdate.Count..0]|ForEach-Object {
 		  $begin = $_.beginRowNum;
 		  $end = $_.endRowNum;
-		  $newcontent=$newcontent[0..($begin-1)]+$newcontent[($end)..$newcontent.count]
+		  $newcontent=$newcontent[0..($begin-2)]+$newcontent[($end)..$newcontent.count]
 		}
-
-
-		#$fileContentbefore | Select-Object -Skip 1 | Set-Content b.txt
-
-		Write-Host "newcontent is:" $newcontent ;
+		Write-Host "Set new content";
 		Set-Content -Path $file.FullName -Value $newcontent;
-
-		$fileContentafter= Get-Content $file.FullName ;
-		Write-Host "File Content After: " $fileContentafter ;
-		
+		$fileContentafter= Get-Content $file.FullName;
+		Write-Host "File Content After: " $fileContentafter ;		
 		Write-Host "Part II Complete:";	
 
-		 #1 parsing Tags
-		Write-Host "Part I Tags:";	
-		$tags = $fileContentbefore.Split("[**Tags**]");
-		$tags = $tags[0];
-		Write-Host $tags;	
-		$tags| ForEach-Object{
-		  Write-Host $_;	
-		}
 
-		Write-Host "Part I Complete:";	
 	 }
 }
 
