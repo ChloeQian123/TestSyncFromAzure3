@@ -182,7 +182,7 @@ Function SplitContent($SplitDir){
 		}
 
 
-		$offset=0;
+		$offset=1;
 		for($i=0;$i -lt $arForUpdate.Count;$i++){
 		  $begin = $arForUpdate[$i].beginRowNum-$offset;
 		  $end = $arForUpdate[$i].endRowNum-$offset;
