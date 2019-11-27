@@ -169,8 +169,8 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		git remote add auth $RemoteURL
 		git push -u auth $branchName
 
-        git remote set-url origin $RemoteURL
-		git remote add origin $RemoteURL2
+        git remote set-url origin $RemoteURL2
+
 
 		$today = [DateTime]::Now;
         $dateStringDel= $today.AddDays(-7).ToString("yyyy-MM-dd")
