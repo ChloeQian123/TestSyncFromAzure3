@@ -89,7 +89,7 @@ Function PushtoGithub($GithubRepoUrl)
 	git status
 
 	Write-Host "Commit to local Repo";
-	git commit -m "test commit 1124-5"
+	git commit -m "test commit 1128-1"
 
 	Write-Host "Push to remote Repo using https";
 
