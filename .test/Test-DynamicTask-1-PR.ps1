@@ -210,8 +210,6 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 
 		Write-Host "push to githubrepo";
 		git push --force pb master
-
-
 	}
 }
 
