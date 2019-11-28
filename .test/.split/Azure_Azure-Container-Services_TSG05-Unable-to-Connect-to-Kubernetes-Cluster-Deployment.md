@@ -1,8 +1,5 @@
-﻿---
+---
 Tags:
-- cw.Azure
-- cw.Azure - TSG
-- Confidentiality:Internal
 ---
 [**Tags**](/Tags): [Azure](/Tags/Azure)  [Azure - TSG](/Tags/Azure-%2D-TSG)  [Azure Container Service](/Tags/Azure-Container-Service) 
 
