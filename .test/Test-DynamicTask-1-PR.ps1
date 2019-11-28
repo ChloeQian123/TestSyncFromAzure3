@@ -205,6 +205,9 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 	    $GithubRepoPushUrl="https://ChloeQian123:d8b0343a598c8be68738243af0e70f2f243e1e67@github.com/ChloeQian123/TestSyncFromAzure.git";
 	    git remote add pb $GithubRepoPushUrl
 
+		Write-Host "pull from githubrepo";
+		git pull pb master
+
 		Write-Host "push to githubrepo";
 		git push pb master
 	}
