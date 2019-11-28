@@ -177,39 +177,44 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		git push -u origin $branchName
 
 
-		#$today = [DateTime]::Now;
-        #$dateStringDel= $today.AddDays(-7).ToString("yyyy-MM-dd")
-		#$dateStringDel
-		#Write-Host "View Branch"
-        #git branch -r
-        #Write-Host "Delete Branch 7 days ago"
-		#git branch --remote|
-        #Where-Object{!$_.contains("master") -and $_.contains("autoupdate-") }|
-        #Where-Object{[datetime]::Parse((git log -1 $_.trim() --pretty=format:"%cD")) -lt $dateStringDel}|
+		$today = [DateTime]::Now;
+        $dateStringDel= $today.AddDays(-7).ToString("yyyy-MM-dd")
+		$dateStringDel
+		Write-Host "View Branch"
+        git branch -r
+        Write-Host "Delete Branch 7 days ago"
+		git branch --remote|
+        Where-Object{!$_.contains("master") -and $_.contains("autoupdate-") }|
+        Where-Object{[datetime]::Parse((git log -1 $_.trim() --pretty=format:"%cD")) -lt $dateStringDel}|
         #ForEach-Object{git push origin --delete ($_.Replace("origin/","")).trim()}
+		Write-Host "Shwo push address";
+	    git remote show origin
+	    Write-Host "Push to remote Repo";
+        git push -u origin master
         #git branch -r
         
-		## Open a pull request
-		#$encodedPAT = [Convert]::ToBase64String([System.Text.ASCIIEncoding]::ASCII.GetBytes(":" + $PAT))
-		#$createPRResponse = Invoke-RestMethod -Method POST `
-		#	-Uri $PRResponseURL2 `
-		#	-ContentType "application/json" `
-		#	-Headers @{"Authorization" = "Basic $encodedPAT"} `
-		#	-Body "{ sourceRefName: `"refs/heads/$branchName`", targetRefName: `"refs/heads/master`", title: `"$CommitTitleText`" }"
+		# Open a pull request
+		$encodedPAT = [Convert]::ToBase64String([System.Text.ASCIIEncoding]::ASCII.GetBytes(":" + $PAT))
+		$createPRResponse = Invoke-RestMethod -Method POST `
+			-Uri $PRResponseURL2 `
+			-ContentType "application/json" `
+			-Headers @{"Authorization" = "Basic $encodedPAT"} `
+			-Body "{ sourceRefName: `"refs/heads/$branchName`", targetRefName: `"refs/heads/master`", title: `"$CommitTitleText`" }"
 
-		##$prid = $createPRResponse.pullRequestId
-		#$commitId = $createPRResponse.lastMergeSourceCommit.commitId | Select -First 1
+		$prid = $createPRResponse.pullRequestId
+		$commitId = $createPRResponse.lastMergeSourceCommit.commitId | Select -First 1
 		
-		## Wait 5 seconds. Azure DevOps seems to need a few seconds before we try to complete.
-		#Start-Sleep 5
-		#$RestPATCHURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName/pullrequests/" + $prid + "?api-version=5.0"
+		# Wait 5 seconds. Azure DevOps seems to need a few seconds before we try to complete.
+		Start-Sleep 5
+		$RestPATCHURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName2/pullrequests/" + $prid + "?api-version=5.0"
+
 		
-		## Now complete the pull request and override policies
-		#Invoke-RestMethod -Method PATCH `
-		#	-Uri ($RestPATCHURL) `
-		#	-ContentType "application/json" `
-		#	-Headers @{"Authorization" = "Basic $encodedPAT"} `
-		#	-Body "{ status: `"completed`", lastMergeSourceCommit: { commitId: `"$commitId`" }, completionOptions: { bypassPolicy: `"true`", bypassReason: `"$CommitTitleText`"  } }"
+		# Now complete the pull request and override policies
+		Invoke-RestMethod -Method PATCH `
+			-Uri ($RestPATCHURL2) `
+			-ContentType "application/json" `
+			-Headers @{"Authorization" = "Basic $encodedPAT"} `
+			-Body "{ status: `"completed`", lastMergeSourceCommit: { commitId: `"$commitId`" }, completionOptions: { bypassPolicy: `"true`", bypassReason: `"$CommitTitleText`"  } }"
 	
 	}
 }
