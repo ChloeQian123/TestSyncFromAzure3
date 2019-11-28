@@ -209,7 +209,7 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		git pull pb master
 
 		Write-Host "push to githubrepo";
-		git push pb master
+		git push --force pb master
 	}
 }
 
