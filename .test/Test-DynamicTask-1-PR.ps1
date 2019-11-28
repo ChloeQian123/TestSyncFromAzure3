@@ -159,7 +159,9 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 
 		# Commit our changes to a new branch, and push
 		#git remote set-url origin $RemoteURL2
+		Write-Host "Reset push repository";
 		git remote set-url --push origin $RemoteURL2
+		git remote show origin
 		git branch $branchName
 		git checkout $branchName
 		git add .
