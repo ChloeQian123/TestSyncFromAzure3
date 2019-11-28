@@ -216,4 +216,4 @@ PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName2;
 
 #Push to Github
 $GithubRepoUrl="https://github.com/ChloeQian123/ChloeQian123.github.io.git";
-#PushtoGithub $GithubRepoUrl;
+PushtoGithub $GithubRepoUrl;
