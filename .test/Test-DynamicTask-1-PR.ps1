@@ -9,7 +9,7 @@ if(-not $ExcutePSFile)
 $ScriptFolder =".test\";
 
 #. ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + "Common.ps1");
-. ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + $ExcutePSFile);
+
 #Build at local: & ((Split-Path $MyInvocation.InvocationName) + "\Common.ps1");
 #$ExcutePSFile = "DynamicTask-Main-Daily.ps1",  "DynamicTask-Main-EveryChange.ps1"
 
@@ -147,24 +147,14 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		$dateString = [DateTime]::Now.ToString("yyyyMMddHHmmss")
 		$branchName = "autoupdate-$dateString"
 
-		$CommitText = "Mix Content Automatic Update"
-		$CommitTitleText = "Mix Content Automatic Update"  
+		$CommitText = "Automatic Dynamic Content Update"
+		$CommitTitleText = "Automatic Dynamic Content Update"
 
 		$DevOPSDomain = "dev.azure.com"
-		$ReposName2 = "SyncTestRepo"
-		$RemoteURL2 = "https://${OrganizationName}:$PAT@$DevOPSDomain/$OrganizationName/$ProjectName/_git/$ReposName2"
 		$RemoteURL = "https://${OrganizationName}:$PAT@$DevOPSDomain/$OrganizationName/$ProjectName/_git/$ReposName"
 		$PRResponseURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName/pullrequests?api-version=5.0"
-		$PRResponseURL2 = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName2/pullrequests?api-version=5.0"
-
+    
 		# Commit our changes to a new branch, and push
-		#git remote set-url origin $RemoteURL2
-		Write-Host "Show Origin";
-		git remote show origin
-		Write-Host "Reset push repository";
-		git remote set-url --push origin $RemoteURL2
-		Write-Host "Show Origin";
-		git remote show origin
 		git branch $branchName
 		git checkout $branchName
 		git add .
@@ -177,9 +167,7 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		git remote add auth $RemoteURL
 		git push -u auth $branchName
 
-		git push -u origin $branchName
-
-
+        git remote set-url origin $RemoteURL
 		$today = [DateTime]::Now;
         $dateStringDel= $today.AddDays(-7).ToString("yyyy-MM-dd")
 		$dateStringDel
@@ -189,40 +177,39 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		git branch --remote|
         Where-Object{!$_.contains("master") -and $_.contains("autoupdate-") }|
         Where-Object{[datetime]::Parse((git log -1 $_.trim() --pretty=format:"%cD")) -lt $dateStringDel}|
-        #ForEach-Object{git push origin --delete ($_.Replace("origin/","")).trim()}
-		Write-Host "Shwo push address";
-	    git remote show origin
-	    Write-Host "Push to remote Repo";
-        git push -u origin master
-        #git branch -r
+        ForEach-Object{git push origin --delete ($_.Replace("origin/","")).trim()}
+        git branch -r
         
 		# Open a pull request
 		$encodedPAT = [Convert]::ToBase64String([System.Text.ASCIIEncoding]::ASCII.GetBytes(":" + $PAT))
 		$createPRResponse = Invoke-RestMethod -Method POST `
-			-Uri $PRResponseURL2 `
+			-Uri $PRResponseURL `
 			-ContentType "application/json" `
 			-Headers @{"Authorization" = "Basic $encodedPAT"} `
 			-Body "{ sourceRefName: `"refs/heads/$branchName`", targetRefName: `"refs/heads/master`", title: `"$CommitTitleText`" }"
 
 		$prid = $createPRResponse.pullRequestId
 		$commitId = $createPRResponse.lastMergeSourceCommit.commitId | Select -First 1
-		
+
 		# Wait 5 seconds. Azure DevOps seems to need a few seconds before we try to complete.
 		Start-Sleep 5
-		$RestPATCHURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName2/pullrequests/" + $prid + "?api-version=5.0"
+		$RestPATCHURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName/pullrequests/" + $prid + "?api-version=5.0"
 
-		
 		# Now complete the pull request and override policies
 		Invoke-RestMethod -Method PATCH `
-			-Uri ($RestPATCHURL2) `
+			-Uri ($RestPATCHURL) `
 			-ContentType "application/json" `
 			-Headers @{"Authorization" = "Basic $encodedPAT"} `
 			-Body "{ status: `"completed`", lastMergeSourceCommit: { commitId: `"$commitId`" }, completionOptions: { bypassPolicy: `"true`", bypassReason: `"$CommitTitleText`"  } }"
-	
 	}
 }
 
 #Run Git commit and push operations
 PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName;
+
+. ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + $ExcutePSFile);
+
+$ReposName2="SyncTestRepo";
+PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName2;
 $GithubRepoUrl="https://github.com/ChloeQian123/ChloeQian123.github.io.git";
 PushtoGithub $GithubRepoUrl;
