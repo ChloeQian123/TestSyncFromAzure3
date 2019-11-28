@@ -148,7 +148,7 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 		$branchName = "autoupdate-$dateString"
 
 		$CommitText = "Mix Content Automatic Update"
-		$CommitTitleText = "Mix Content Automatic Update"
+		$CommitTitleText = "Mix Content Automatic Update"  
 
 		$DevOPSDomain = "dev.azure.com"
 		$ReposName2 = "SyncTestRepo"
@@ -159,8 +159,11 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 
 		# Commit our changes to a new branch, and push
 		#git remote set-url origin $RemoteURL2
+		Write-Host "Show Origin";
+		git remote show origin
 		Write-Host "Reset push repository";
 		git remote set-url --push origin $RemoteURL2
+		Write-Host "Show Origin";
 		git remote show origin
 		git branch $branchName
 		git checkout $branchName
