@@ -202,7 +202,7 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 			-Body "{ status: `"completed`", lastMergeSourceCommit: { commitId: `"$commitId`" }, completionOptions: { bypassPolicy: `"true`", bypassReason: `"$CommitTitleText`"  } }"
 	
 	    Write-Host "Add remote githubrepo";
-	    $GithubRepoPushUrl="https://ChloeQian123:d8b0343a598c8be68738243af0e70f2f243e1e67@github.com/ChloeQian123/TestSyncFromAzure.git";
+	    $GithubRepoPushUrl="https://ChloeQian123:d8b0343a598c8be68738243af0e70f2f243e1e67@github.com/ChloeQian123/TestSyncFromAzure2.git";
 	    git remote add pb $GithubRepoPushUrl
 
 		Write-Host "pull from githubrepo";
