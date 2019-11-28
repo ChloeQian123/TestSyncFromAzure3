@@ -184,27 +184,27 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
         ForEach-Object{git push origin --delete ($_.Replace("origin/","")).trim()}
         git branch -r
         
-		# Open a pull request
-		$encodedPAT = [Convert]::ToBase64String([System.Text.ASCIIEncoding]::ASCII.GetBytes(":" + $PAT))
-		$createPRResponse = Invoke-RestMethod -Method POST `
-			-Uri $PRResponseURL `
-			-ContentType "application/json" `
-			-Headers @{"Authorization" = "Basic $encodedPAT"} `
-			-Body "{ sourceRefName: `"refs/heads/$branchName`", targetRefName: `"refs/heads/master`", title: `"$CommitTitleText`" }"
+		## Open a pull request
+		#$encodedPAT = [Convert]::ToBase64String([System.Text.ASCIIEncoding]::ASCII.GetBytes(":" + $PAT))
+		#$createPRResponse = Invoke-RestMethod -Method POST `
+		#	-Uri $PRResponseURL `
+		#	-ContentType "application/json" `
+		#	-Headers @{"Authorization" = "Basic $encodedPAT"} `
+		#	-Body "{ sourceRefName: `"refs/heads/$branchName`", targetRefName: `"refs/heads/master`", title: `"$CommitTitleText`" }"
 
-		$prid = $createPRResponse.pullRequestId
-		$commitId = $createPRResponse.lastMergeSourceCommit.commitId | Select -First 1
-
-		# Wait 5 seconds. Azure DevOps seems to need a few seconds before we try to complete.
-		Start-Sleep 5
-		$RestPATCHURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName/pullrequests/" + $prid + "?api-version=5.0"
-
-		# Now complete the pull request and override policies
-		Invoke-RestMethod -Method PATCH `
-			-Uri ($RestPATCHURL) `
-			-ContentType "application/json" `
-			-Headers @{"Authorization" = "Basic $encodedPAT"} `
-			-Body "{ status: `"completed`", lastMergeSourceCommit: { commitId: `"$commitId`" }, completionOptions: { bypassPolicy: `"true`", bypassReason: `"$CommitTitleText`"  } }"
+		#$prid = $createPRResponse.pullRequestId
+		#$commitId = $createPRResponse.lastMergeSourceCommit.commitId | Select -First 1
+		#
+		## Wait 5 seconds. Azure DevOps seems to need a few seconds before we try to complete.
+		#Start-Sleep 5
+		#$RestPATCHURL = "https://$DevOPSDomain/$OrganizationName/$ProjectName/_apis/git/repositories/$ReposName/pullrequests/" + $prid + "?api-version=5.0"
+		#
+		## Now complete the pull request and override policies
+		#Invoke-RestMethod -Method PATCH `
+		#	-Uri ($RestPATCHURL) `
+		#	-ContentType "application/json" `
+		#	-Headers @{"Authorization" = "Basic $encodedPAT"} `
+		#	-Body "{ status: `"completed`", lastMergeSourceCommit: { commitId: `"$commitId`" }, completionOptions: { bypassPolicy: `"true`", bypassReason: `"$CommitTitleText`"  } }"
 	
 	}
 }
