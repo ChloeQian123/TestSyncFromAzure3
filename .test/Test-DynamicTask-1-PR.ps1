@@ -94,7 +94,7 @@ Function PushtoGithub($GithubRepoUrl)
 	Write-Host "Push to remote Repo using https";
 
 	Write-Host "Set remote Repo";
-	$GithubRepoPushUrl="https://ChloeQian123:759bba943e7a7a4ec4a27136b9a4d6a6a261b8ce@github.com/ChloeQian123/ChloeQian123.github.io.git";
+	$GithubRepoPushUrl="https://ChloeQian123:d8b0343a598c8be68738243af0e70f2f243e1e67@github.com/ChloeQian123/ChloeQian123.github.io.git";
     git remote set-url --push origin $GithubRepoPushUrl
 
 	Write-Host "Origin after";
