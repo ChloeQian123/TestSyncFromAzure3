@@ -200,14 +200,6 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 			-ContentType "application/json" `
 			-Headers @{"Authorization" = "Basic $encodedPAT"} `
 			-Body "{ status: `"completed`", lastMergeSourceCommit: { commitId: `"$commitId`" }, completionOptions: { bypassPolicy: `"true`", bypassReason: `"$CommitTitleText`"  } }"
-	    
-		Write-Host "Add GitHub Repo";
-	    $GithubRepoPushUrl="https://ChloeQian123:759bba943e7a7a4ec4a27136b9a4d6a6a261b8ce@github.com/ChloeQian123/ChloeQian123.github.io.git";
-        git remote add githubrepo $GithubRepoPushUrl
-	    
-		git fetch githubrepo
-		Write-Host "Push to Github";
-		git push githubrepo master
 	}
 }
 
