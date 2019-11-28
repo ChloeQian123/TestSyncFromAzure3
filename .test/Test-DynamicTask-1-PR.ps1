@@ -46,8 +46,7 @@ $GlobalUserName = $env:GlobalUserName;
 git config --global user.email $GlobalUserEmail
 git config --global user.name $GlobalUserName
 
-#Run the script tasks
-RunDynamicPSTasks $ScriptFolder;
+
 
 Write-Host "pat number is " $PAT;
 Write-Host "env pat number is " $env:PAT;
@@ -204,12 +203,17 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 	}
 }
 
-#Run Git commit and push operations
+#Run Azure Git commit and push operations
 PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName;
 
+#Run the script tasks
 . ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + $ExcutePSFile);
+RunDynamicPSTasks $ScriptFolder;
 
+#Run Azure Git commit and push operations to spesified Repo
 $ReposName2="SyncTestRepo";
 PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName2;
+
+#Push to Github
 $GithubRepoUrl="https://github.com/ChloeQian123/ChloeQian123.github.io.git";
 PushtoGithub $GithubRepoUrl;
