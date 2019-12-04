@@ -1,4 +1,4 @@
-﻿---
+---
 Tags:
 - cw.Azure
 - cw.Azure - TSG

@@ -1,4 +1,4 @@
-﻿---
+---
 Tags:
 - Confidentiality:Internal
 - cw.Azure - TSG
@@ -53,7 +53,7 @@ We will update the table with the information what we have seen in cases this ye
 <td style="vertical-align:top">The vulnerability is remotely executable from _within_ a cluster, but not from the general internet. Thus, given that the DNS server is inside a user's project and shielded from the Internet, users are not vulnerable to external attacks.</td>
 <td style="vertical-align:top">Nonetheless, users likely want to upgrade their DNS servers to the latest version. To do this they need to do the following:
 <p>* ssh into the master(s)</p>
-<p>* edit '/etc/kubernetes/addons/kube-dns-deployment.yaml'</p>
+<p>* edit�'/etc/kubernetes/addons/kube-dns-deployment.yaml'</p>
 <p>* find the container named 'dnsmasq'</p>
 <p>* change the image from whatever it was to 'gcrio.azureedge.net/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5'</p>
 <p>That should cause the DNS server to update.</p>

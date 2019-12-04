@@ -1,4 +1,4 @@
-ï»¿---
+---
 Tags:
 - Confidentiality:Internal
 - cw.Azure - TSG
@@ -14,7 +14,7 @@ Collect general logs for Kubernetes troubleshooting
 
 Collect the logs below and upload to Workspace for further analysis.
 
-On MasterÂ   
+On Master   
 
 <div>
 
@@ -33,8 +33,8 @@ On MasterÂ 
 
 </div>
 
-Â 
-On AgentÂ   
+ 
+On Agent   
 
 <div>
 
