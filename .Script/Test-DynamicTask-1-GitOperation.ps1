@@ -38,6 +38,8 @@ $ProjectName = $env:ProjectName;
 $ReposName = $env:ReposName;
 $AzureUserEmail = $env:AzureUserEmail;
 $AzureUserName = $env:AzureUserName;
+$GithubUserEmail =$env:GithubUserEmail;
+$GithubUserName =$env:GithubUserName;
 
 git config --global user.email $AzureUserEmail
 git config --global user.name $AzureUserName
@@ -46,7 +48,10 @@ Write-Host "pat number is " $PAT;
 Write-Host "env pat number is " $env:PAT;
 Write-Host "OrganizationName is " $OrganizationName;
 Write-Host "ProjectName is " $ProjectName;
-Write-Host "ReposName is " $ReposName;
+Write-Host "AzureUserEmail is " $AzureUserEmail;
+Write-Host "AzureUserName is " $AzureUserName;
+Write-Host "GithubUserEmail is " $GithubUserEmail;
+Write-Host "GithubUserName is " $GithubUserName;
 
 
 Function FindChild($parentFolderPath,$sourcePath,$destinationPath){
@@ -91,7 +96,7 @@ Function PushtoRemote($CloneRepo,$RepoPushUrl,$RepoName,$UserEmail,$UserName)
 
 	#enter destination project and initialize user account
 	cd $RepoName 
-    Write-Host "Config account info";
+    Write-Host "Config account info UserEmail:"$UserEmail "UserName:"$UserName;
 	git config --global user.email $UserEmail
     git config --global user.name $UserName
 
@@ -270,6 +275,6 @@ PushtoRemote $CloneRepo $AzureRepoPushUrl $AzureRepoName $AzureUserEmail $AzureU
 #Push to Github Repo
 $GithubRepoName="TestSyncFromAzure3";
 $CloneRepo="https://github.com/ChloeQian123/TestSyncFromAzure3.git";
-$GithubRepoPushUrl="https://ChloeQian123:3de92e83ba94d31f874458981f84d0877d575a0e@github.com/ChloeQian123/TestSyncFromAzure3.git";
+$GithubRepoPushUrl="https://ChloeQian123:b0dce50fa92890668d9aeea5b5b71a62bf3b22b2@github.com/ChloeQian123/TestSyncFromAzure3.git";
 PushtoRemote $CloneRepo $GithubRepoPushUrl $GithubRepoName $GithubUserEmail $GithubUserName;
 
