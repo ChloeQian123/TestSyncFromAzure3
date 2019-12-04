@@ -28,8 +28,12 @@ steps:
 
     WikiName: '%%WikiName%%'
 
-    GlobalUserEmail: 'v-jichlo@microsoft.com'
+    AzureUserEmail: 'v-jichlo@microsoft.com'
 
-    GlobalUserName: 'Chloe Chloe'
+    AzureUserName: 'Chloe Chloe'
+
+    GithubUserEmail: '503272740@qq.com'
+
+    GithubUserName: 'ChloeQian123'
 
     ExcutePSFile: 'Test-DynamicTask-Main-Continuous.ps1'

@@ -1,4 +1,4 @@
-param($PAT, $OrganizationName, $ProjectName,$ReposName,$GlobalUserEmail, $GlobalUserName, $ExcutePSFile)
+param($PAT,$OrganizationName,$ProjectName,$ReposName,$AzureUserEmail,$AzureUserName,$GithubUserEmail,$GithubUserName,$ExcutePSFile)
 
 if(-not $ExcutePSFile)
 {
@@ -36,11 +36,11 @@ $PAT = $env:PAT;
 $OrganizationName = $env:OrganizationName;
 $ProjectName = $env:ProjectName;
 $ReposName = $env:ReposName;
-$GlobalUserEmail = $env:GlobalUserEmail;
-$GlobalUserName = $env:GlobalUserName;
+$AzureUserEmail = $env:AzureUserEmail;
+$AzureUserName = $env:AzureUserName;
 
-git config --global user.email $GlobalUserEmail
-git config --global user.name $GlobalUserName
+git config --global user.email $AzureUserEmail
+git config --global user.name $AzureUserName
 
 Write-Host "pat number is " $PAT;
 Write-Host "env pat number is " $env:PAT;
@@ -74,28 +74,28 @@ Function FindChild($parentFolderPath,$sourcePath,$destinationPath){
   }
 }
 
-Function PushtoRemote($CloneRepo,$GithubRepoPushUrl,$RepoName)
+Function PushtoRemote($CloneRepo,$RepoPushUrl,$RepoName,$UserEmail,$UserName)
 {
-
     $MixProjLocation = Get-Location;
     Write-Host "Current Location is:" $MixProjLocation;
     #$sshItemLocation = $MixProjLocation.ToString() + "\.test\.ssh\*";
 
-	#back to parent folder of current project
+	#get back to parent folder of current project
 	cd ..
+
+	#clone destination project
     $GithubTempRepo=$RepoName;
-
     Write-Host "Remote Repo operations start:";
-	Write-Host "Config account info";
-	git config --global user.email $GlobalUserEmail
-    git config --global user.name $GlobalUserName
-
     Write-Host "Clone Remote Repo to local ..\"$RepoName;
     git clone $CloneRepo $RepoName 
 
-	#enter Destination project
+	#enter destination project and initialize user account
 	cd $RepoName 
+    Write-Host "Config account info";
+	git config --global user.email $UserEmail
+    git config --global user.name $UserName
 
+	#prepare for sorce and destination patch
 	$updateFolder="\";
 	$sourcePath=$CurrentProjContentLocation.ToString()+$updateFolder;
 	$currentPath=Get-location;
@@ -136,13 +136,12 @@ Function PushtoRemote($CloneRepo,$GithubRepoPushUrl,$RepoName)
 	git status
 
 	Write-Host "Commit to local Repo";
-	git commit -m "test commit 1129-1"
+	git commit -m "test 1204-1"
 
 	Write-Host "Push to remote Repo using https";
 
 	Write-Host "Set remote Repo";
-	#$GithubRepoPushUrl="https://ChloeQian123:8a1458c5c85e66d8a67fcaa94772183016910118@github.com/ChloeQian123/TestSyncFromAzure2.git";
-    git remote set-url --push origin $GithubRepoPushUrl
+    git remote set-url --push origin $RepoPushUrl
 
 	Write-Host "Origin after";
 	git remote show origin
@@ -261,16 +260,16 @@ Function PubulishDynamicContent($PAT, $OrganizationName,$ProjectName, $ReposName
 . ((Split-Path $MyInvocation.InvocationName) + $ScriptFolder + $ExcutePSFile);
 RunDynamicPSTasks $ScriptFolder;
 
-#Run Azure Git commit and push operations to spesified Repo
+#Push to Azure Public Repo
 $AzureRepoName="Demo-SupportContent-Public-RP";
 $CloneRepo="https://ChloeQian123:f5yvvtkgvu5r6d5feyqpmojwxdgkvjyese33vq2xspb6fve3kgqa@dev.azure.com/ChloeQian123/ChloeQian123.github.io/_git/Demo-SupportContent-Public-RP";
 $AzureRepoPushUrl="https://ChloeQian123:f5yvvtkgvu5r6d5feyqpmojwxdgkvjyese33vq2xspb6fve3kgqa@dev.azure.com/ChloeQian123/ChloeQian123.github.io/_git/Demo-SupportContent-Public-RP";
-PushtoRemote $CloneRepo $AzureRepoPushUrl $AzureRepoName;
+PushtoRemote $CloneRepo $AzureRepoPushUrl $AzureRepoName $AzureUserEmail $AzureUserName;
 #PubulishDynamicContent $PAT $OrganizationName $ProjectName $ReposName;
 
-#Push to Github
+#Push to Github Repo
 $GithubRepoName="TestSyncFromAzure3";
 $CloneRepo="https://github.com/ChloeQian123/TestSyncFromAzure3.git";
-$GithubRepoPushUrl="https://ChloeQian123:8a1458c5c85e66d8a67fcaa94772183016910118@github.com/ChloeQian123/TestSyncFromAzure3.git";
-PushtoRemote $CloneRepo $GithubRepoPushUrl $GithubRepoName;
+$GithubRepoPushUrl="https://ChloeQian123:3de92e83ba94d31f874458981f84d0877d575a0e@github.com/ChloeQian123/TestSyncFromAzure3.git";
+PushtoRemote $CloneRepo $GithubRepoPushUrl $GithubRepoName $GithubUserEmail $GithubUserName;
 
